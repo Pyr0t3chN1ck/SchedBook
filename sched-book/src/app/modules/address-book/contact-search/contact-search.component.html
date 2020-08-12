@@ -1,0 +1,32 @@
+<form>
+    <mat-form-field>
+        <mat-label>Search Contacts</mat-label>
+        <input matInput>
+    </mat-form-field>
+</form>
+
+<mat-table [dataSource]="dataSource">
+    <!-- User name Definition -->
+    <ng-container matColumnDef="username">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+    </ng-container>
+
+    <!-- Age Definition -->
+    <ng-container matColumnDef="age">
+        <mat-header-cell *matHeaderCellDef> Address </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.weight}} </mat-cell>
+    </ng-container>
+
+    <!-- Title Definition -->
+    <ng-container matColumnDef="title">
+        <mat-header-cell *matHeaderCellDef> Phone Number </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.symbol}} </mat-cell>
+    </ng-container>
+
+    <!-- Header and Row Declarations -->
+    <mat-header-row *matHeaderRowDef="['username', 'age', 'title']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['username', 'age', 'title']"></mat-row>
+</mat-table>
+<mat-paginator [length]="10" [pageSize]="5" [pageSizeOptions]="[2, 5, 10]">
+</mat-paginator>
