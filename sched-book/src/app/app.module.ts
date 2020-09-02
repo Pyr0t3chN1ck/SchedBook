@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AddressBookModule } from './modules/address-book/address-book.module';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { AddressBookModule } from './modules/address-book/address-book.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     CoreModule,
-    AddressBookModule
+    AddressBookModule,
+    MatNativeDateModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

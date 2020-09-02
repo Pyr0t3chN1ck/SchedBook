@@ -1,12 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
+import { MatDialog } from '@angular/material/dialog';
+import { ContactFormComponent } from '../contact-form/contact-form.component';
 
 @Component({
   selector: 'app-contact-search',
@@ -14,26 +10,39 @@ export interface PeriodicElement {
   styleUrls: ['./contact-search.component.css']
 })
 
-
 export class ContactSearchComponent implements OnInit {
-  dataSource = new MatTableDataSource<PeriodicElement> ([
-    { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-    { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-    { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-    { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-    { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-    { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-    { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-    { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-    { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-    { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
+  dataSource = new MatTableDataSource([
+    { name: 'John Smith', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
+    email: 'testmail@email.com', dob: new Date() },
+    { name: 'Jane Doe', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
+    email: 'testmail@email.com', dob: new Date() },
+    { name: 'Orlando Bloom', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
+    email: 'testmail@email.com', dob: new Date() },
+    { name: 'Chris Evans', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
+    email: 'testmail@email.com', dob: new Date() },
+    { name: 'Clark Kent', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
+    email: 'testmail@email.com', dob: new Date() },
+    { name: 'Peter Parker', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
+    email: 'testmail@email.com', dob: new Date() },
+    { name: 'Bruce Wayne', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
+    email: 'testmail@email.com', dob: new Date() },
   ]);
-  @ViewChild(MatPaginator, {static: true}) searchResultTablePaginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) searchResultTablePaginator: MatPaginator;
+  tableColumns = ['name', 'address', 'phoneNumber', 'email', 'dob'];
+  searchText: string;
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.dataSource.paginator = this.searchResultTablePaginator;
+  }
+
+  search() {
+    this.dataSource.filter = this.searchText.toLocaleLowerCase();
+  }
+
+  openAddDialog() {
+    const addClientDialogRef = this.dialog.open(ContactFormComponent);
   }
 
 }

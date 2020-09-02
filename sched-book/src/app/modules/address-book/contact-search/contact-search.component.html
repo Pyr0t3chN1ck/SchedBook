@@ -1,32 +1,43 @@
-<form>
-    <mat-form-field>
-        <mat-label>Search Contacts</mat-label>
-        <input matInput>
-    </mat-form-field>
-</form>
+<mat-card>
+    <form>
+        <mat-form-field appearance="outline">
+            <mat-label>Search Contacts</mat-label>
+            <input matInput name="searchBox" [(ngModel)]="searchText">
+        </mat-form-field>
 
-<mat-table [dataSource]="dataSource">
-    <!-- User name Definition -->
-    <ng-container matColumnDef="username">
-        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
-    </ng-container>
+        <button mat-raised-button color="primary" type="button" (click)="search()">Search</button>
+    </form>
 
-    <!-- Age Definition -->
-    <ng-container matColumnDef="age">
-        <mat-header-cell *matHeaderCellDef> Address </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.weight}} </mat-cell>
-    </ng-container>
+    <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="address">
+            <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.address}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="phoneNumber">
+            <mat-header-cell *matHeaderCellDef>Phone Number</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.phoneNumber}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.email}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="dob">
+            <mat-header-cell *matHeaderCellDef>Date of Birth</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.dob}} </mat-cell>
+        </ng-container>
 
-    <!-- Title Definition -->
-    <ng-container matColumnDef="title">
-        <mat-header-cell *matHeaderCellDef> Phone Number </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.symbol}} </mat-cell>
-    </ng-container>
+        <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: tableColumns"></mat-row>
+    </mat-table>
+    <mat-paginator [length]="10" [pageSize]="5" [pageSizeOptions]="[2, 5, 10]">
+    </mat-paginator>
 
-    <!-- Header and Row Declarations -->
-    <mat-header-row *matHeaderRowDef="['username', 'age', 'title']"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: ['username', 'age', 'title']"></mat-row>
-</mat-table>
-<mat-paginator [length]="10" [pageSize]="5" [pageSizeOptions]="[2, 5, 10]">
-</mat-paginator>
+    <button mat-raised-button color="accent" type="button" (click)="openAddDialog()">
+        <mat-icon>add</mat-icon>
+        Add Contact
+    </button>
+</mat-card>
