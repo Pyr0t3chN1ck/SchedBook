@@ -1,35 +1,35 @@
 <h1 mat-dialog-title>Add Client Form</h1>
 <div mat-dialog-content>
-    <form>
+    <form [formGroup]="contactForm">
         <mat-form-field>
             <mat-label>First Name</mat-label>
-            <input matInput />
+            <input matInput formControlName="firstName" />
         </mat-form-field>
         <br />
         <mat-form-field>
             <mat-label>Last Name</mat-label>
-            <input matInput />
+            <input matInput formControlName="lastName" />
         </mat-form-field>
         <br />
         <mat-form-field>
             <mat-label>Address</mat-label>
-            <textarea matInput></textarea>
+            <textarea matInput formControlName="address"></textarea>
         </mat-form-field>
         <br />
         <mat-form-field>
             <mat-label>Phone Number</mat-label>
-            <app-phone-number-input></app-phone-number-input>
+            <app-phone-number-input matInput formControlName="phoneNumber"></app-phone-number-input>
             <mat-icon matSuffix>phone</mat-icon>
         </mat-form-field>
         <br />
         <mat-form-field>
             <mat-label>Email</mat-label>
-            <input matInput />
+            <input matInput formControlName="email" />
         </mat-form-field>
         <br />
         <mat-form-field>
             <mat-label>Date of Birth</mat-label>
-            <input matInput [matDatepicker]="dobPicker">
+            <input matInput [matDatepicker]="dobPicker" formControlName="dateOfBirth">
             <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
             <mat-datepicker #dobPicker></mat-datepicker>
         </mat-form-field>
@@ -38,20 +38,20 @@
         <br />
         <mat-form-field>
             <mat-label>Brands</mat-label>
-            <textarea matInput></textarea>
+            <textarea matInput formControlName="preferredBrands"></textarea>
         </mat-form-field>
         <br />
         <mat-form-field>
             <mat-label>Colors</mat-label>
-            <textarea matInput></textarea>
+            <textarea matInput formControlName="preferredColors"></textarea>
         </mat-form-field>
     </form>
 </div>
 <div mat-dialog-actions>
-    <button mat-raised-button (click)="onCancelClick()">
+    <button mat-raised-button (click)="onCancel()">
         Cancel
     </button>
-    <button mat-raised-button color="primary">
+    <button mat-raised-button color="primary" [disabled]="!contactForm.valid" (click)="onSave()">
         Save
     </button>
 </div>
