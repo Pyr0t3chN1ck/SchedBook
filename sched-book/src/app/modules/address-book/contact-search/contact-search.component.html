@@ -1,13 +1,15 @@
 <mat-card>
     <form>
-        <mat-form-field appearance="outline">
-            <mat-label>Search Contacts</mat-label>
-            <input matInput name="searchBox" [(ngModel)]="searchText">
-        </mat-form-field>
-
-        <button mat-raised-button color="primary" type="button" (click)="search()">Search</button>
+        <div class="contact-search-container">
+            <mat-form-field appearance="outline">
+                <mat-label>Search Contacts</mat-label>
+                <input matInput name="searchBox" [(ngModel)]="searchText">
+            </mat-form-field>
+            <div class="search-button">
+                <button mat-raised-button color="primary" type="button" (click)="search()">Search</button>
+            </div>
+        </div>
     </form>
-
     <mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="name">
             <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
