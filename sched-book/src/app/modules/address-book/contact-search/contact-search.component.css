@@ -1,0 +1,9 @@
+.contact-search-container {
+    display: flex;
+    align-items: center;
+}
+
+.search-button {
+    padding-left: 2em;
+    padding-bottom: 1em;
+}

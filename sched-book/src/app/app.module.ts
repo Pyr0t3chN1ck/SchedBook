@@ -5,17 +5,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfigurationPageModule } from './modules/configuration-page/configuration-page.module';
+import { AddressBookModule } from './modules/address-book/address-book.module';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     CoreModule,
-    ConfigurationPageModule
+    ConfigurationPageModule,
+    AddressBookModule,
+    MatNativeDateModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
