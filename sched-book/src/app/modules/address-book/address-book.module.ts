@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContactSearchComponent } from './contact-search/contact-search.component';
-import { AddressBookComponent } from './address-book/address-book.component';
+import { AddressBookComponent } from './address-book.component';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
