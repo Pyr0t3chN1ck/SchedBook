@@ -1,1 +1,26 @@
-<p>nail-services-configuration works!</p>
+<div class="nail-services-config-wrapper" style="position:relative;">
+    <div class="nail-services-config-list">
+        <mat-selection-list #nailServicesListEl [multiple]="false" (selectionChange)="onSelect(nailServicesListEl.selectedOptions.selected)">
+            <mat-list-option *ngFor="let nailService of nailServices; let i = index" [value]="i">
+                {{nailService.name}}
+            </mat-list-option>
+        </mat-selection-list>
+    </div>
+    <mat-divider [vertical]="true"></mat-divider>
+    <div *ngIf="selectedNailService" class="nail-service-config-main">
+        <h3>Edit Service</h3>
+        <form [formGroup]="nailServiceForm">
+            <mat-form-field>
+                <mat-label>Service Name</mat-label>
+                <input matInput formControlName="serviceName" />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Service Price</mat-label>
+                <input matInput type="number" formControlName="servicePrice" />
+            </mat-form-field>
+        </form>
+        <button mat-raised-button color="primary" [disabled]="!nailServiceForm.valid" (click)="onSave()">
+            Save
+        </button>
+    </div>
+</div>

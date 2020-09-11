@@ -31,7 +31,7 @@ export class ContactFormComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  onSave() {
+  onSave(): void {
     if (this.contactForm.valid) {
       console.log(this.contactForm.value);
     }
