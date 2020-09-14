@@ -6,9 +6,7 @@
                 <mat-label>Search Contacts</mat-label>
                 <input matInput name="searchBox" [(ngModel)]="searchText">
             </mat-form-field>
-            <div class="search-button">
-                <button mat-raised-button color="primary" type="button" (click)="search()">Search</button>
-            </div>
+                <button class="search-button" mat-raised-button color="primary" type="button" (click)="search()">Search</button>
         </div>
     </form>
     <mat-table [dataSource]="dataSource">

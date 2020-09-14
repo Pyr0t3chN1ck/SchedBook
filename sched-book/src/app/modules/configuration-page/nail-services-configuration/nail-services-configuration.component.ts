@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NailService } from "../../../shared/models";
+import { NailService } from '../../../shared/models';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatListOption } from '@angular/material/list';
 
@@ -10,27 +10,27 @@ import { MatListOption } from '@angular/material/list';
 })
 export class NailServicesConfigurationComponent implements OnInit {
   nailServices: NailService[] = [
-    {name: 'Manicure', price: 20.00},
-    {name: 'Pedicure', price: 27.00},
-    {name: 'Acrylics', price: 35.00},
-    {name: 'Manicure', price: 20.00},
-    {name: 'Pedicure', price: 27.00},
-    {name: 'Acrylics', price: 35.00},
-    {name: 'Manicure', price: 20.00},
-    {name: 'Pedicure', price: 27.00},
-    {name: 'Acrylics', price: 35.00},
-    {name: 'Manicure', price: 20.00},
-    {name: 'Pedicure', price: 27.00},
-    {name: 'Acrylics', price: 35.00},
-    {name: 'Manicure', price: 20.00},
-    {name: 'Pedicure', price: 27.00},
-    {name: 'Acrylics', price: 35.00},
-    {name: 'Manicure', price: 20.00},
-    {name: 'Pedicure', price: 27.00},
-    {name: 'Acrylics', price: 35.00},
-    {name: 'Manicure', price: 20.00},
-    {name: 'Pedicure', price: 27.00},
-    {name: 'Acrylics', price: 35.00},
+    { id: '1', name: 'Manicure', price: 20.00 },
+    { id: '2', name: 'Pedicure', price: 27.00 },
+    { id: '3', name: 'Acrylics', price: 35.00 },
+    { id: '4', name: 'Manicure', price: 20.00 },
+    { id: '5', name: 'Pedicure', price: 27.00 },
+    { id: '6', name: 'Acrylics', price: 35.00 },
+    { id: '7', name: 'Manicure', price: 20.00 },
+    { id: '8', name: 'Pedicure', price: 27.00 },
+    { id: '9', name: 'Acrylics', price: 35.00 },
+    { id: '10', name: 'Manicure', price: 20.00 },
+    { id: '11', name: 'Pedicure', price: 27.00 },
+    { id: '12', name: 'Acrylics', price: 35.00 },
+    { id: '13', name: 'Manicure', price: 20.00 },
+    { id: '14', name: 'Pedicure', price: 27.00 },
+    { id: '15', name: 'Acrylics', price: 35.00 },
+    { id: '16', name: 'Manicure', price: 20.00 },
+    { id: '17', name: 'Pedicure', price: 27.00 },
+    { id: '18', name: 'Acrylics', price: 35.00 },
+    { id: '19', name: 'Manicure', price: 20.00 },
+    { id: '20', name: 'Pedicure', price: 27.00 },
+    { id: '21', name: 'Acrylics', price: 35.00 },
   ];
   nailServiceForm = this.formBuilder.group({
     serviceName: new FormControl('', [Validators.required]),
@@ -49,6 +49,11 @@ export class NailServicesConfigurationComponent implements OnInit {
       serviceName: this.selectedNailService.name,
       servicePrice: this.selectedNailService.price
     });
+  }
+
+  onDelete(): void {
+    this.nailServices = this.nailServices.filter(ns => ns.id !== this.selectedNailService.id);
+    console.log('Deleted Nail Service!');
   }
 
   onSave(): void {

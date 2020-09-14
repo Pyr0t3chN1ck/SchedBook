@@ -1,6 +1,7 @@
-<div class="nail-services-config-wrapper" style="position:relative;">
+<div class="nail-services-config-wrapper">
     <div class="nail-services-config-list">
-        <mat-selection-list #nailServicesListEl [multiple]="false" (selectionChange)="onSelect(nailServicesListEl.selectedOptions.selected)">
+        <mat-selection-list #nailServicesListEl [multiple]="false"
+            (selectionChange)="onSelect(nailServicesListEl.selectedOptions.selected)">
             <mat-list-option *ngFor="let nailService of nailServices; let i = index" [value]="i">
                 {{nailService.name}}
             </mat-list-option>
@@ -21,6 +22,10 @@
         </form>
         <button mat-raised-button color="primary" [disabled]="!nailServiceForm.valid" (click)="onSave()">
             Save
+        </button>
+        <button class="delete-nail-service-button" mat-raised-button color="warn" [disabled]="!nailServiceForm.valid"
+            (click)="onDelete()">
+            Delete
         </button>
     </div>
 </div>
