@@ -44,9 +44,9 @@ export class ContactSearchComponent implements OnInit {
 
   openAddDialog() {
     const addClientDialogRef = this.dialog.open(ContactFormComponent);
-    addClientDialogRef.afterClosed().subscribe(
-      data => this.addClient(data)
-    );
+    addClientDialogRef.componentInstance.save.subscribe(data => {
+      this.addClient(data);
+    });
   }
 
   addClient(newClient: Client) {

@@ -96,9 +96,9 @@ export class PhoneNumberInputComponent implements ControlValueAccessor, MatFormF
       return new PhoneNumber(area, exchange, subscriber);
     }
     else if (!this.parts.valid
-      && this.parts.controls['area'].value === ''
-      && this.parts.controls['exchange'].value === ''
-      && this.parts.controls['subscriber'].value === '') {
+      && this.parts.controls.area.value === ''
+      && this.parts.controls.exchange.value === ''
+      && this.parts.controls.subscriber.value === '') {
         return new PhoneNumber('', '' , '');
     }
     return null;

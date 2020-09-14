@@ -20,6 +20,7 @@ export class ContactFormComponent implements OnInit {
     preferredBrands: new FormControl(''),
     preferredColors: new FormControl(''),
   });
+  save = new EventEmitter<Client>();
 
   constructor(private dialogRef: MatDialogRef<ContactFormComponent>, private formBuilder: FormBuilder) {
     dialogRef.disableClose = true;
@@ -34,10 +35,11 @@ export class ContactFormComponent implements OnInit {
 
   onSave(): void {
     if (this.contactForm.valid) {
-      const phoneNumberObject = this.contactForm.controls['phoneNumber'].value as PhoneNumber;
+      const phoneNumberObject = this.contactForm.controls.phoneNumber.value as PhoneNumber;
       const clientFormObject = this.contactForm.value as Client;
       clientFormObject.phoneNumber = phoneNumberObject.area + phoneNumberObject.exchange + phoneNumberObject.subscriber;
-      this.dialogRef.close(clientFormObject);
+      this.save.emit(clientFormObject);
+      this.dialogRef.close();
     }
   }
 }
