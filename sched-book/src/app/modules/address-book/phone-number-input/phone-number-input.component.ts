@@ -7,9 +7,9 @@ import { FocusMonitor } from '@angular/cdk/a11y';
 
 export class PhoneNumber {
   constructor(
-      public area: string,
-      public exchange: string,
-      public subscriber: string
+    public area: string,
+    public exchange: string,
+    public subscriber: string
   ) { }
 }
 
@@ -44,8 +44,8 @@ export class PhoneNumberInputComponent implements ControlValueAccessor, MatFormF
   controlType = 'phone-number-input';
   id = `phone-number-input-${PhoneNumberInputComponent.nextId++}`;
   describedBy = '';
-  onChange = (_: any) => {};
-  onTouched = () => {};
+  onChange = (_: any) => { };
+  onTouched = () => { };
 
   get empty() {
     const {
@@ -94,6 +94,12 @@ export class PhoneNumberInputComponent implements ControlValueAccessor, MatFormF
         value: { area, exchange, subscriber }
       } = this.parts;
       return new PhoneNumber(area, exchange, subscriber);
+    }
+    else if (!this.parts.valid
+      && this.parts.controls['area'].value === ''
+      && this.parts.controls['exchange'].value === ''
+      && this.parts.controls['subscriber'].value === '') {
+        return new PhoneNumber('', '' , '');
     }
     return null;
   }

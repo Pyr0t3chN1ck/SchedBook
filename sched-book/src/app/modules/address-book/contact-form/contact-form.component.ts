@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { PhoneNumber } from '../phone-number-input/phone-number-input.component';
+import { Client } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-contact-form',
@@ -33,7 +34,10 @@ export class ContactFormComponent implements OnInit {
 
   onSave(): void {
     if (this.contactForm.valid) {
-      console.log(this.contactForm.value);
+      const phoneNumberObject = this.contactForm.controls['phoneNumber'].value as PhoneNumber;
+      const clientFormObject = this.contactForm.value as Client;
+      clientFormObject.phoneNumber = phoneNumberObject.area + phoneNumberObject.exchange + phoneNumberObject.subscriber;
+      this.dialogRef.close(clientFormObject);
     }
   }
 }
