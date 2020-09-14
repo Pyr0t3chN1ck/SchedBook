@@ -16,7 +16,7 @@ export class ContactFormComponent implements OnInit {
     address: new FormControl(''),
     phoneNumber: new FormControl(new PhoneNumber('', '', '')),
     email: new FormControl('', [Validators.email]),
-    dateOfBirth: new FormControl(new Date()),
+    dateOfBirth: new FormControl(),
     preferredBrands: new FormControl(''),
     preferredColors: new FormControl(''),
   });

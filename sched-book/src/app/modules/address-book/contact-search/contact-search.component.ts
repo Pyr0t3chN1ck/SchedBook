@@ -50,10 +50,10 @@ export class ContactSearchComponent implements OnInit {
   }
 
   addClient(newClient: Client) {
-    console.log(newClient);
     const data = this.dataSource.data;
     data.push(newClient);
     this.dataSource.data = data;
+    console.log('Added New Client!');
   }
 
 }
