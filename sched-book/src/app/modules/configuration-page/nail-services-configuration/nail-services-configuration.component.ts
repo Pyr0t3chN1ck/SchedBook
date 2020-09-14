@@ -33,10 +33,10 @@ export class NailServicesConfigurationComponent implements OnInit {
     { id: '21', name: 'Acrylics', price: 35.00 },
   ];
   nailServiceForm = this.formBuilder.group({
-    serviceName: new FormControl('', [Validators.required]),
-    servicePrice: new FormControl('')
+    name: new FormControl('', [Validators.required]),
+    price: new FormControl('')
   });
-  selectedNailService: NailService;
+  selectedNailServiceId = '';
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -44,21 +44,24 @@ export class NailServicesConfigurationComponent implements OnInit {
   }
 
   onSelect(selectedOptions: MatListOption[]) {
-    this.selectedNailService = this.nailServices[selectedOptions[0].value];
+    this.selectedNailServiceId = this.nailServices[selectedOptions[0].value].id;
     this.nailServiceForm.patchValue({
-      serviceName: this.selectedNailService.name,
-      servicePrice: this.selectedNailService.price
+      name: this.nailServices.find(ns => ns.id === this.selectedNailServiceId).name,
+      price: this.nailServices.find(ns => ns.id === this.selectedNailServiceId).price
     });
   }
 
   onDelete(): void {
-    this.nailServices = this.nailServices.filter(ns => ns.id !== this.selectedNailService.id);
+    this.nailServices = this.nailServices.filter(ns => ns.id !== this.selectedNailServiceId);
     console.log('Deleted Nail Service!');
   }
 
   onSave(): void {
     if (this.nailServiceForm.valid) {
-      console.log(this.nailServiceForm.value);
+      const editedNailService = this.nailServiceForm.value as NailService;
+      editedNailService.id = this.selectedNailServiceId;
+      this.nailServices[this.nailServices.findIndex(ns => ns.id === this.selectedNailServiceId)] = editedNailService;
+      console.log('Edited Nail Service!');
     }
   }
 
