@@ -33,6 +33,7 @@ export class NailServicesConfigurationComponent implements OnInit {
   ];
   @ViewChild('nailServicesListEl') nailServiceListEl: MatSelectionList;
   selectedNailService: NailService = null;
+  showAddServiceForm = false;
 
   constructor() { }
 
@@ -51,15 +52,23 @@ export class NailServicesConfigurationComponent implements OnInit {
   }
 
   saveNailServiceEdit(editedNailService: NailService): void {
-      this.nailServices[this.nailServices.findIndex(ns => ns.id === this.selectedNailService.id)] = editedNailService;
-      this.selectedNailService = null;
-      this.nailServiceListEl.selectedOptions.clear();
-      console.log('Edited Nail Service!');
+    editedNailService.id = this.selectedNailService.id;
+    this.nailServices[this.nailServices.findIndex(ns => ns.id === this.selectedNailService.id)] = editedNailService;
+    this.selectedNailService = null;
+    this.nailServiceListEl.selectedOptions.clear();
+    console.log('Edited Nail Service!');
   }
 
   openAddServiceForm() {
+    this.showAddServiceForm = true;
     this.selectedNailService = null;
     this.nailServiceListEl.selectedOptions.clear();
+  }
+
+  addService(newNailService: NailService) {
+    this.nailServices.unshift(newNailService);
+    this.showAddServiceForm = false;
+    console.log('Added Nail Service!');
   }
 
 }

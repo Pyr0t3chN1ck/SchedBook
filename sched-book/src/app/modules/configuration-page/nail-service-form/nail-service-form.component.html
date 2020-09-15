@@ -1,4 +1,4 @@
-<h3>Edit Service</h3>
+<h3>{{isAddServiceForm ? 'Add' : 'Edit'}} Service</h3>
 <form [formGroup]="nailServiceForm">
     <mat-form-field>
         <mat-label>Service Name</mat-label>
@@ -10,9 +10,9 @@
     </mat-form-field>
 </form>
 <button mat-raised-button color="primary" [disabled]="!nailServiceForm.valid" (click)="onSave()">
-    Save
+    {{isAddServiceForm ? 'Add' : 'Save'}}
 </button>
-<button class="delete-nail-service-button" mat-raised-button color="warn" [disabled]="!nailServiceForm.valid"
+<button *ngIf="!isAddServiceForm" class="delete-nail-service-button" mat-raised-button color="warn" [disabled]="!nailServiceForm.valid"
     (click)="onDelete()">
     Delete
 </button>
