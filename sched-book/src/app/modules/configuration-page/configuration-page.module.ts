@@ -4,11 +4,12 @@ import { ConfigurationPageComponent } from './configuration-page.component';
 import { NailServicesConfigurationComponent } from './nail-services-configuration/nail-services-configuration.component';
 import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/angular-material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NailServiceFormComponent } from './nail-service-form/nail-service-form.component';
 
 
 
 @NgModule({
-  declarations: [ConfigurationPageComponent, NailServicesConfigurationComponent],
+  declarations: [ConfigurationPageComponent, NailServicesConfigurationComponent, NailServiceFormComponent],
   imports: [
     CommonModule,
     AngularMaterialModule,

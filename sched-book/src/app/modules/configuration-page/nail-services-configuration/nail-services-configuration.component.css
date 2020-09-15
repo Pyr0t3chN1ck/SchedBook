@@ -2,10 +2,18 @@
     display: flex;
 }
 
+.lhs-wrapper {
+    width: 20%;
+}
+
+.lhs-wrapper>button {
+    width: 90%;
+    margin: 0.5em;
+}
+
 .nail-services-config-list {
     min-height: 250px;
     max-height: 500px;
-    width: 20%;
     overflow: auto;
     margin: 0.5em;
     border: 0.1em solid lightgray;
@@ -15,13 +23,4 @@
 .nail-service-config-main {
     max-height: 500px;
     margin: 0.5em;
-}
-
-.nail-service-config-main form {
-    display: flex;
-    flex-direction: column;
-}
-
-.delete-nail-service-button {
-    margin-left: 1em;;
 }

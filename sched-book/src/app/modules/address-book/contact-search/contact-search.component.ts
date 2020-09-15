@@ -39,7 +39,8 @@ export class ContactSearchComponent implements OnInit {
   }
 
   search() {
-    this.dataSource.filter = this.searchText.toLocaleLowerCase();
+    this.dataSource.filter = (!this.searchText) ?
+      '' : this.searchText.toLocaleLowerCase();
   }
 
   openAddDialog() {

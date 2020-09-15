@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NailService } from '../../../shared/models';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { MatListOption } from '@angular/material/list';
+import { MatSelectionList } from '@angular/material/list';
 
 @Component({
   selector: 'app-nail-services-configuration',
@@ -32,37 +31,35 @@ export class NailServicesConfigurationComponent implements OnInit {
     { id: '20', name: 'Pedicure', price: 27.00 },
     { id: '21', name: 'Acrylics', price: 35.00 },
   ];
-  nailServiceForm = this.formBuilder.group({
-    name: new FormControl('', [Validators.required]),
-    price: new FormControl('')
-  });
-  selectedNailServiceId = '';
+  @ViewChild('nailServicesListEl') nailServiceListEl: MatSelectionList;
+  selectedNailService: NailService = null;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
 
-  onSelect(selectedOptions: MatListOption[]) {
-    this.selectedNailServiceId = this.nailServices[selectedOptions[0].value].id;
-    this.nailServiceForm.patchValue({
-      name: this.nailServices.find(ns => ns.id === this.selectedNailServiceId).name,
-      price: this.nailServices.find(ns => ns.id === this.selectedNailServiceId).price
-    });
+  selectNailService() {
+    this.selectedNailService = this.nailServices[this.nailServiceListEl.selectedOptions.selected[0].value];
   }
 
-  onDelete(): void {
-    this.nailServices = this.nailServices.filter(ns => ns.id !== this.selectedNailServiceId);
+  deleteNailService(deletedNailService: NailService): void {
+    this.nailServices = this.nailServices.filter(ns => ns.id !== deletedNailService.id);
+    this.selectedNailService = null;
+    this.nailServiceListEl.selectedOptions.clear();
     console.log('Deleted Nail Service!');
   }
 
-  onSave(): void {
-    if (this.nailServiceForm.valid) {
-      const editedNailService = this.nailServiceForm.value as NailService;
-      editedNailService.id = this.selectedNailServiceId;
-      this.nailServices[this.nailServices.findIndex(ns => ns.id === this.selectedNailServiceId)] = editedNailService;
+  saveNailServiceEdit(editedNailService: NailService): void {
+      this.nailServices[this.nailServices.findIndex(ns => ns.id === this.selectedNailService.id)] = editedNailService;
+      this.selectedNailService = null;
+      this.nailServiceListEl.selectedOptions.clear();
       console.log('Edited Nail Service!');
-    }
+  }
+
+  openAddServiceForm() {
+    this.selectedNailService = null;
+    this.nailServiceListEl.selectedOptions.clear();
   }
 
 }

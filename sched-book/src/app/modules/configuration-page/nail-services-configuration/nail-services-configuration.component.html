@@ -1,31 +1,21 @@
 <div class="nail-services-config-wrapper">
-    <div class="nail-services-config-list">
-        <mat-selection-list #nailServicesListEl [multiple]="false"
-            (selectionChange)="onSelect(nailServicesListEl.selectedOptions.selected)">
-            <mat-list-option *ngFor="let nailService of nailServices; let i = index" [value]="i">
-                {{nailService.name}}
-            </mat-list-option>
-        </mat-selection-list>
+    <div class="lhs-wrapper">
+        <button mat-raised-button color="accent" type="button" (click)="openAddServiceForm()">
+            <mat-icon>add</mat-icon>
+            Add Service
+        </button>
+        <div class="nail-services-config-list">
+            <mat-selection-list #nailServicesListEl [multiple]="false" (selectionChange)="selectNailService()">
+                <mat-list-option *ngFor="let nailService of nailServices; let i = index" [value]="i">
+                    {{nailService.name}}
+                </mat-list-option>
+            </mat-selection-list>
+        </div>
     </div>
     <mat-divider [vertical]="true"></mat-divider>
-    <div *ngIf="selectedNailServiceId !== ''" class="nail-service-config-main">
-        <h3>Edit Service</h3>
-        <form [formGroup]="nailServiceForm">
-            <mat-form-field>
-                <mat-label>Service Name</mat-label>
-                <input matInput formControlName="name" />
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Service Price</mat-label>
-                <input matInput type="number" formControlName="price" />
-            </mat-form-field>
-        </form>
-        <button mat-raised-button color="primary" [disabled]="!nailServiceForm.valid" (click)="onSave()">
-            Save
-        </button>
-        <button class="delete-nail-service-button" mat-raised-button color="warn" [disabled]="!nailServiceForm.valid"
-            (click)="onDelete()">
-            Delete
-        </button>
+    <div *ngIf="selectedNailService !== null" class="nail-service-config-main">
+        <app-nail-service-form [currentNailService]="selectedNailService"
+            (saveNailService)="saveNailServiceEdit($event)" (deleteNailService)="deleteNailService($event)">
+        </app-nail-service-form>
     </div>
 </div>
