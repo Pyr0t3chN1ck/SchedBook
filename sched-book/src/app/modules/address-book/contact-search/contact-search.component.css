@@ -7,3 +7,13 @@
     margin-left: 2em;
     margin-bottom: 1em;
 }
+
+/* .search-table-header {
+    flex-direction: column;
+    justify-content: center;
+} */
+
+.search-row-actions {
+    text-align: center;
+    justify-content: center;
+}

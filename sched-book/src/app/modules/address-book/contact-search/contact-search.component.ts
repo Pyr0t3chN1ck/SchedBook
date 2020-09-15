@@ -29,7 +29,7 @@ export class ContactSearchComponent implements OnInit {
     email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: '' },
   ]);
   @ViewChild(MatPaginator, { static: true }) searchResultTablePaginator: MatPaginator;
-  tableColumns = ['name', 'address', 'phoneNumber', 'email', 'dob'];
+  tableColumns = ['name', 'address', 'phoneNumber', 'email', 'dob', 'actions'];
   searchText: string;
 
   constructor(private dialog: MatDialog) { }
@@ -39,8 +39,8 @@ export class ContactSearchComponent implements OnInit {
   }
 
   search() {
-    this.dataSource.filter = (!this.searchText) ?
-      '' : this.searchText.toLocaleLowerCase();
+    this.dataSource.filter = (this.searchText) ?
+      this.searchText.toLocaleLowerCase() : '';
   }
 
   openAddDialog() {
