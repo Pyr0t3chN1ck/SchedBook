@@ -34,7 +34,7 @@
         <ng-container matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
             <mat-cell *matCellDef="let row" class="search-row-actions">
-                <button mat-icon-button>
+                <button mat-icon-button (click)="openEditDialog(row)">
                     <mat-icon>edit</mat-icon>
                 </button>
                 |
