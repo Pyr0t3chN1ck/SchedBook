@@ -1,12 +1,13 @@
 <mat-card>
     <mat-card-title>Clients</mat-card-title>
     <form>
-        <div class="contact-search-container">
+        <div class="client-search-container">
             <mat-form-field appearance="outline">
-                <mat-label>Search Contacts</mat-label>
+                <mat-label>Search Clients</mat-label>
                 <input matInput name="searchBox" [(ngModel)]="searchText">
             </mat-form-field>
-                <button class="search-button" mat-raised-button color="primary" type="button" (click)="search()">Search</button>
+            <button class="search-button" mat-raised-button color="primary" type="button"
+                (click)="search()">Search</button>
         </div>
     </form>
     <mat-table [dataSource]="dataSource">
@@ -33,7 +34,13 @@
         <ng-container matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
             <mat-cell *matCellDef="let row" class="search-row-actions">
-                <button mat-icon-button><mat-icon>edit</mat-icon></button>|<button mat-icon-button><mat-icon>delete</mat-icon></button>
+                <button mat-icon-button>
+                    <mat-icon>edit</mat-icon>
+                </button>
+                |
+                <button mat-icon-button (click)="openDeleteDialog(row)">
+                    <mat-icon>delete</mat-icon>
+                </button>
             </mat-cell>
         </ng-container>
 

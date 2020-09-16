@@ -5,12 +5,12 @@ import { PhoneNumber } from '../phone-number-input/phone-number-input.component'
 import { Client } from 'src/app/shared/models';
 
 @Component({
-  selector: 'app-contact-form',
-  templateUrl: './contact-form.component.html',
-  styleUrls: ['./contact-form.component.css']
+  selector: 'app-client-form',
+  templateUrl: './client-form.component.html',
+  styleUrls: ['./client-form.component.css']
 })
-export class ContactFormComponent implements OnInit {
-  contactForm = this.formBuilder.group({
+export class ClientFormComponent implements OnInit {
+  clientForm = this.formBuilder.group({
     firstName: new FormControl('', [Validators.required]),
     lastName: new FormControl(''),
     address: new FormControl(''),
@@ -22,7 +22,7 @@ export class ContactFormComponent implements OnInit {
   });
   save = new EventEmitter<Client>();
 
-  constructor(private dialogRef: MatDialogRef<ContactFormComponent>, private formBuilder: FormBuilder) {
+  constructor(private dialogRef: MatDialogRef<ClientFormComponent>, private formBuilder: FormBuilder) {
     dialogRef.disableClose = true;
   }
 
@@ -34,9 +34,9 @@ export class ContactFormComponent implements OnInit {
   }
 
   onSave(): void {
-    if (this.contactForm.valid) {
-      const phoneNumberObject = this.contactForm.controls.phoneNumber.value as PhoneNumber;
-      const clientFormObject = this.contactForm.value as Client;
+    if (this.clientForm.valid) {
+      const phoneNumberObject = this.clientForm.controls.phoneNumber.value as PhoneNumber;
+      const clientFormObject = this.clientForm.value as Client;
       clientFormObject.phoneNumber = phoneNumberObject.area + phoneNumberObject.exchange + phoneNumberObject.subscriber;
       this.save.emit(clientFormObject);
       this.dialogRef.close();

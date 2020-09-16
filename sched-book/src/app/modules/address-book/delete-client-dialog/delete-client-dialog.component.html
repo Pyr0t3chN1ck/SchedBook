@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Delete Client</h1>
+<div mat-mat-dialog-content>
+    <p>Are you sure you want to delete client '{{data.firstName}} {{data.lastName}}' ?</p>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button (click)="onCancel()">
+        Cancel
+    </button>
+    <button mat-raised-button color="warn" (click)="onDelete()">
+        Delete
+    </button>
+</div>
