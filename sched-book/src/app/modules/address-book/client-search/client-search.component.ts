@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { ClientFormComponent } from '../client-form/client-form.component';
@@ -43,6 +43,7 @@ export class ClientSearchComponent implements OnInit {
       email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: ''
     },
   ]);
+  @ViewChild(MatTable) searchResultTable: MatTable<Client>;
   @ViewChild(MatPaginator, { static: true }) searchResultTablePaginator: MatPaginator;
   tableColumns = ['name', 'address', 'phoneNumber', 'email', 'dob', 'actions'];
   searchText: string;
@@ -86,4 +87,20 @@ export class ClientSearchComponent implements OnInit {
     console.log('Deleted Client!');
   }
 
+  openEditDialog(row: Client): void {
+    const editClientDialogRef = this.dialog.open(ClientFormComponent, {
+      data: row
+    });
+    editClientDialogRef.componentInstance.save.subscribe(data => {
+      this.editClient(data);
+    });
+  }
+
+  editClient(editedClient: Client): void {
+    const updatedDatedSource = this.dataSource.data;
+    const editedClientIndex = updatedDatedSource.findIndex(client => client.id === editedClient.id);
+    updatedDatedSource[editedClientIndex] = editedClient;
+    this.dataSource.data = updatedDatedSource;
+    console.log('Edited Client!');
+  }
 }
