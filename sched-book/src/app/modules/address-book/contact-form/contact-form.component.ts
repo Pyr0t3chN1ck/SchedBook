@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { PhoneNumber } from '../phone-number-input/phone-number-input.component';
+import { Client } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-contact-form',
@@ -15,10 +16,11 @@ export class ContactFormComponent implements OnInit {
     address: new FormControl(''),
     phoneNumber: new FormControl(new PhoneNumber('', '', '')),
     email: new FormControl('', [Validators.email]),
-    dateOfBirth: new FormControl(new Date()),
+    dateOfBirth: new FormControl(),
     preferredBrands: new FormControl(''),
     preferredColors: new FormControl(''),
   });
+  save = new EventEmitter<Client>();
 
   constructor(private dialogRef: MatDialogRef<ContactFormComponent>, private formBuilder: FormBuilder) {
     dialogRef.disableClose = true;
@@ -31,9 +33,13 @@ export class ContactFormComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  onSave() {
+  onSave(): void {
     if (this.contactForm.valid) {
-      console.log(this.contactForm.value);
+      const phoneNumberObject = this.contactForm.controls.phoneNumber.value as PhoneNumber;
+      const clientFormObject = this.contactForm.value as Client;
+      clientFormObject.phoneNumber = phoneNumberObject.area + phoneNumberObject.exchange + phoneNumberObject.subscriber;
+      this.save.emit(clientFormObject);
+      this.dialogRef.close();
     }
   }
 }

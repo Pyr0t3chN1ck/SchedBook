@@ -1,19 +1,18 @@
 <mat-card>
+    <mat-card-title>Clients</mat-card-title>
     <form>
         <div class="contact-search-container">
             <mat-form-field appearance="outline">
                 <mat-label>Search Contacts</mat-label>
                 <input matInput name="searchBox" [(ngModel)]="searchText">
             </mat-form-field>
-            <div class="search-button">
-                <button mat-raised-button color="primary" type="button" (click)="search()">Search</button>
-            </div>
+                <button class="search-button" mat-raised-button color="primary" type="button" (click)="search()">Search</button>
         </div>
     </form>
     <mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="name">
             <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{row.firstName + ' ' + row.lastName}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="address">
             <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>
@@ -29,7 +28,13 @@
         </ng-container>
         <ng-container matColumnDef="dob">
             <mat-header-cell *matHeaderCellDef>Date of Birth</mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.dob}} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{row.dateOfBirth}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let row" class="search-row-actions">
+                <button mat-icon-button><mat-icon>edit</mat-icon></button>|<button mat-icon-button><mat-icon>delete</mat-icon></button>
+            </mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
@@ -40,6 +45,6 @@
 
     <button mat-raised-button color="accent" type="button" (click)="openAddDialog()">
         <mat-icon>add</mat-icon>
-        Add Contact
+        Add Client
     </button>
 </mat-card>

@@ -1,0 +1,23 @@
+<div class="nail-services-config-wrapper">
+    <div class="lhs-wrapper">
+        <button mat-raised-button color="accent" type="button" (click)="openAddServiceForm()">
+            <mat-icon>add</mat-icon>
+            Add Service
+        </button>
+        <div class="nail-services-config-list">
+            <mat-selection-list #nailServicesListEl [multiple]="false" (selectionChange)="selectNailService()">
+                <mat-list-option *ngFor="let nailService of nailServices; let i = index" [value]="i">
+                    {{nailService.name}}
+                </mat-list-option>
+            </mat-selection-list>
+        </div>
+    </div>
+    <mat-divider [vertical]="true"></mat-divider>
+    <div class="nail-service-config-main">
+        <app-nail-service-form *ngIf="selectedNailService !== null" [currentNailService]="selectedNailService"
+            (saveNailService)="saveNailServiceEdit($event)" (deleteNailService)="deleteNailService($event)">
+        </app-nail-service-form>
+        <app-nail-service-form *ngIf="showAddServiceForm && selectedNailService === null" [isAddServiceForm]="true" (saveNailService)="addService($event)">
+        </app-nail-service-form>
+    </div>
+</div>

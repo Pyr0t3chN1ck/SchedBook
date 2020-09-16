@@ -1,0 +1,8 @@
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.delete-nail-service-button {
+    margin-left: 1em;;
+}

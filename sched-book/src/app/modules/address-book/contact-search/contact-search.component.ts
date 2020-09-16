@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { ContactFormComponent } from '../contact-form/contact-form.component';
+import { Client } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-contact-search',
@@ -11,24 +12,24 @@ import { ContactFormComponent } from '../contact-form/contact-form.component';
 })
 
 export class ContactSearchComponent implements OnInit {
-  dataSource = new MatTableDataSource([
-    { name: 'John Smith', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-    email: 'testmail@email.com', dob: new Date() },
-    { name: 'Jane Doe', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-    email: 'testmail@email.com', dob: new Date() },
-    { name: 'Orlando Bloom', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-    email: 'testmail@email.com', dob: new Date() },
-    { name: 'Chris Evans', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-    email: 'testmail@email.com', dob: new Date() },
-    { name: 'Clark Kent', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-    email: 'testmail@email.com', dob: new Date() },
-    { name: 'Peter Parker', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-    email: 'testmail@email.com', dob: new Date() },
-    { name: 'Bruce Wayne', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-    email: 'testmail@email.com', dob: new Date() },
+  dataSource = new MatTableDataSource<Client>([
+    { id: '1', firstName: 'John', lastName: 'Smith', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
+    email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: '' },
+    { id: '2', firstName: 'Jane', lastName: 'Doe', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
+    email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: '' },
+    { id: '3', firstName: 'Orlando', lastName: 'Bloom', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
+    email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: '' },
+    { id: '4', firstName: 'Chris', lastName: 'Evans', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
+    email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: '' },
+    { id: '5', firstName: 'Clark', lastName: 'Kent', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
+    email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: '' },
+    { id: '6', firstName: 'Peter', lastName: 'Parker', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
+    email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: '' },
+    { id: '7', firstName: 'Bruce', lastName: 'Wayne', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
+    email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: '' },
   ]);
   @ViewChild(MatPaginator, { static: true }) searchResultTablePaginator: MatPaginator;
-  tableColumns = ['name', 'address', 'phoneNumber', 'email', 'dob'];
+  tableColumns = ['name', 'address', 'phoneNumber', 'email', 'dob', 'actions'];
   searchText: string;
 
   constructor(private dialog: MatDialog) { }
@@ -38,12 +39,22 @@ export class ContactSearchComponent implements OnInit {
   }
 
   search() {
-    this.dataSource.filter = this.searchText.toLocaleLowerCase();
+    this.dataSource.filter = (this.searchText) ?
+      this.searchText.toLocaleLowerCase() : '';
   }
 
   openAddDialog() {
-    const addClientDialogRef = this.dialog.open(ContactFormComponent, {
+    const addClientDialogRef = this.dialog.open(ContactFormComponent);
+    addClientDialogRef.componentInstance.save.subscribe(data => {
+      this.addClient(data);
     });
+  }
+
+  addClient(newClient: Client) {
+    const data = this.dataSource.data;
+    data.push(newClient);
+    this.dataSource.data = data;
+    console.log('Added New Client!');
   }
 
 }
