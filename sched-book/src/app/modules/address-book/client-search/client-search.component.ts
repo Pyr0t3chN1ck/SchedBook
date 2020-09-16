@@ -2,16 +2,16 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
-import { ContactFormComponent } from '../contact-form/contact-form.component';
+import { ClientFormComponent } from '../client-form/client-form.component';
 import { Client } from 'src/app/shared/models';
 
 @Component({
-  selector: 'app-contact-search',
-  templateUrl: './contact-search.component.html',
-  styleUrls: ['./contact-search.component.css']
+  selector: 'app-client-search',
+  templateUrl: './client-search.component.html',
+  styleUrls: ['./client-search.component.css']
 })
 
-export class ContactSearchComponent implements OnInit {
+export class ClientSearchComponent implements OnInit {
   dataSource = new MatTableDataSource<Client>([
     { id: '1', firstName: 'John', lastName: 'Smith', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
     email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: '' },
@@ -44,7 +44,7 @@ export class ContactSearchComponent implements OnInit {
   }
 
   openAddDialog() {
-    const addClientDialogRef = this.dialog.open(ContactFormComponent);
+    const addClientDialogRef = this.dialog.open(ClientFormComponent);
     addClientDialogRef.componentInstance.save.subscribe(data => {
       this.addClient(data);
     });
