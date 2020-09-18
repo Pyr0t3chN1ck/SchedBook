@@ -1,0 +1,5 @@
+<mat-nav-list *ngFor="let option of navigationOptions">
+        <a mat-list-item [routerLink]="[option.url]">
+            <mat-icon>{{option.icon}}</mat-icon><span *ngIf="isFullMenu">{{option.title}}</span>
+        </a>
+</mat-nav-list>

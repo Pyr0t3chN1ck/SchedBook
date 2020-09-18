@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { AngularMaterialModule } from '../shared/modules/angular-material/angular-material.module';
 
 
 
@@ -12,11 +12,11 @@ import { FooterComponent } from './footer/footer.component';
     FooterComponent],
   imports: [
     CommonModule,
-    MatToolbarModule,
+    AngularMaterialModule,
   ],
   exports: [
     CommonModule,
-    MatToolbarModule,
+    AngularMaterialModule,
     HeaderComponent,
     FooterComponent]
 })

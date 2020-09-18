@@ -6,10 +6,13 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfigurationPageModule } from './modules/configuration-page/configuration-page.module';
 import { AddressBookModule } from './modules/address-book/address-book.module';
+import { AngularMaterialModule } from './shared/modules/angular-material/angular-material.module';
+import { SidenavComponent } from './modules/navigation/sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    SidenavComponent,
   ],
   imports: [
     BrowserModule,
@@ -18,6 +21,7 @@ import { AddressBookModule } from './modules/address-book/address-book.module';
     CoreModule,
     ConfigurationPageModule,
     AddressBookModule,
+    AngularMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
