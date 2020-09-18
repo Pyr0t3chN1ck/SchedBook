@@ -1,4 +1,7 @@
-<app-header></app-header>
-<app-configuration-page></app-configuration-page>
-<app-address-book></app-address-book>
-<app-footer></app-footer>
+<app-header (menuButtonClick)="sidenavOpen = !sidenavOpen"></app-header>
+<mat-drawer-container [hasBackdrop]="false" [autosize]="true">
+    <mat-drawer #sidenav mode="side" [autoFocus]="false" [opened]="true" [disableClose]="true">
+        <app-sidenav [isFullMenu]="sidenavOpen"></app-sidenav>
+    </mat-drawer>
+    <router-outlet></router-outlet>
+</mat-drawer-container>
