@@ -1,0 +1,37 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Book Appointment</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-radio-group>
+            <mat-radio-button value="true">New Client</mat-radio-button>
+            <mat-radio-button value="false">Existing Client</mat-radio-button>
+        </mat-radio-group>
+        <form>
+            <mat-form-field>
+                <mat-label>Name</mat-label>
+                <input matInput />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Phone Number</mat-label>
+                <app-phone-number-input matInput></app-phone-number-input>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>
+                    Client
+                </mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let client of clients; let i = index" value="i">{{ client.firstName + ' ' + client.lastName }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>
+                    Services
+                </mat-label>
+                <mat-select multiple>
+                    <mat-option *ngFor="let service of services; let i = index" value="i">{{ service.name }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+</mat-card>

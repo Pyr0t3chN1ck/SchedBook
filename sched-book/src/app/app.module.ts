@@ -9,13 +9,11 @@ import { AddressBookModule } from './modules/address-book/address-book.module';
 import { BookingModule } from './modules/booking/booking.module';
 import { AngularMaterialModule } from './shared/modules/angular-material/angular-material.module';
 import { SidenavComponent } from './modules/navigation/sidenav/sidenav.component';
-import { BookingComponent } from './modules/booking/booking.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SidenavComponent,
-    BookingComponent,
   ],
   imports: [
     BrowserModule,
