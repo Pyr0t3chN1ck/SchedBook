@@ -3,11 +3,17 @@
         <mat-card-title>Book Appointment</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <mat-radio-group>
-            <mat-radio-button value="true">New Client</mat-radio-button>
-            <mat-radio-button value="false">Existing Client</mat-radio-button>
-        </mat-radio-group>
         <form>
+            <mat-form-field>
+                <mat-label>Date</mat-label>
+                <input matInput [matDatepicker]="aptDatepicker">
+                <mat-datepicker-toggle matSuffix [for]="aptDatepicker"></mat-datepicker-toggle>
+                <mat-datepicker #aptDatepicker></mat-datepicker>
+              </mat-form-field>
+            <mat-radio-group>
+                <mat-radio-button value="true">New Client</mat-radio-button>
+                <mat-radio-button value="false">Existing Client</mat-radio-button>
+            </mat-radio-group>
             <mat-form-field>
                 <mat-label>Name</mat-label>
                 <input matInput />
@@ -31,6 +37,18 @@
                 <mat-select multiple>
                     <mat-option *ngFor="let service of services; let i = index" value="i">{{ service.name }}</mat-option>
                 </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>
+                    Nail Tech
+                </mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let client of clients; let i = index" value="i">{{ client.firstName + ' ' + client.lastName }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Notes</mat-label>
+                <textarea matInput></textarea>
             </mat-form-field>
         </form>
     </mat-card-content>
