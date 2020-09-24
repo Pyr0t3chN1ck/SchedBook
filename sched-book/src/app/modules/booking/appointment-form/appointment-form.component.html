@@ -9,7 +9,19 @@
                 <input matInput [matDatepicker]="aptDatepicker">
                 <mat-datepicker-toggle matSuffix [for]="aptDatepicker"></mat-datepicker-toggle>
                 <mat-datepicker #aptDatepicker></mat-datepicker>
-              </mat-form-field>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Start Time</mat-label>
+                <input matInput [owlDateTime]="startTimePicker" [owlDateTimeTrigger]="startTimePicker" />
+                <mat-icon matSuffix [owlDateTimeTrigger]="startTimePicker">access_time</mat-icon>
+            </mat-form-field>
+            <owl-date-time [pickerType]="'timer'" [hour12Timer]="true" #startTimePicker></owl-date-time>
+            <mat-form-field>
+                <mat-label>End Time</mat-label>
+                <input matInput [owlDateTime]="endTimePicker" [owlDateTimeTrigger]="endTimePicker" />
+                <mat-icon matSuffix [owlDateTimeTrigger]="endTimePicker">access_time</mat-icon>
+            </mat-form-field>
+            <owl-date-time [pickerType]="'timer'" [hour12Timer]="true" #endTimePicker></owl-date-time>
             <mat-radio-group>
                 <mat-radio-button value="true">New Client</mat-radio-button>
                 <mat-radio-button value="false">Existing Client</mat-radio-button>
@@ -27,7 +39,8 @@
                     Client
                 </mat-label>
                 <mat-select>
-                    <mat-option *ngFor="let client of clients; let i = index" value="i">{{ client.firstName + ' ' + client.lastName }}</mat-option>
+                    <mat-option *ngFor="let client of clients; let i = index" value="i">
+                        {{ client.firstName + ' ' + client.lastName }}</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field>
@@ -35,7 +48,8 @@
                     Services
                 </mat-label>
                 <mat-select multiple>
-                    <mat-option *ngFor="let service of services; let i = index" value="i">{{ service.name }}</mat-option>
+                    <mat-option *ngFor="let service of services; let i = index" value="i">{{ service.name }}
+                    </mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field>
@@ -43,7 +57,8 @@
                     Nail Tech
                 </mat-label>
                 <mat-select>
-                    <mat-option *ngFor="let client of clients; let i = index" value="i">{{ client.firstName + ' ' + client.lastName }}</mat-option>
+                    <mat-option *ngFor="let client of clients; let i = index" value="i">
+                        {{ client.firstName + ' ' + client.lastName }}</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field>

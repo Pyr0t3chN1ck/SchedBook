@@ -4,15 +4,20 @@ import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/a
 import { AppointmentFormComponent } from './appointment-form/appointment-form.component';
 import { BookingComponent } from './booking.component';
 import { SharedComponentsModule } from 'src/app/shared/components/shared-components.module';
-
-
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
 
 @NgModule({
   declarations: [BookingComponent, AppointmentFormComponent,],
   imports: [
     CommonModule,
     AngularMaterialModule,
-    SharedComponentsModule
+    SharedComponentsModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
   ],
   exports: [BookingComponent]
 })
