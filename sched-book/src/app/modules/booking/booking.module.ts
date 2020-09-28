@@ -7,11 +7,13 @@ import { SharedComponentsModule } from 'src/app/shared/components/shared-compone
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [BookingComponent, AppointmentFormComponent,],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     AngularMaterialModule,
     SharedComponentsModule,
     BrowserModule,

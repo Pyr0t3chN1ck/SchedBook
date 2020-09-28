@@ -6,3 +6,8 @@ form {
     display: flex;
     flex-direction: column;
 }
+
+mat-card-actions {
+    display: flex;
+    flex-flow: row-reverse;
+}
