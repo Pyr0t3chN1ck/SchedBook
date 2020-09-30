@@ -12,16 +12,16 @@
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Start Time</mat-label>
-                <input matInput [owlDateTime]="startTimePicker" [owlDateTimeTrigger]="startTimePicker" formControlName="startTime"/>
+                <input matInput [owlDateTime]="startTimePicker" [owlDateTimeTrigger]="startTimePicker" formControlName="startTime" (dateTimeChange)="onStartTimeChange($event)"/>
                 <mat-icon matSuffix [owlDateTimeTrigger]="startTimePicker">access_time</mat-icon>
             </mat-form-field>
-            <owl-date-time [pickerType]="'timer'" [hour12Timer]="true" #startTimePicker></owl-date-time>
+            <owl-date-time [pickerType]="'timer'" [hour12Timer]="true" [stepMinute]="5" #startTimePicker></owl-date-time>
             <mat-form-field>
                 <mat-label>End Time</mat-label>
-                <input matInput [owlDateTime]="endTimePicker" [owlDateTimeTrigger]="endTimePicker" formControlName="endTime"/>
+                <input matInput [owlDateTime]="endTimePicker" [owlDateTimeTrigger]="endTimePicker" [min]="minEndTime" formControlName="endTime"/>
                 <mat-icon matSuffix [owlDateTimeTrigger]="endTimePicker">access_time</mat-icon>
             </mat-form-field>
-            <owl-date-time [pickerType]="'timer'" [hour12Timer]="true" #endTimePicker></owl-date-time>
+            <owl-date-time [pickerType]="'timer'" [hour12Timer]="true" [stepMinute]="5" #endTimePicker></owl-date-time>
             <mat-radio-group formControlName="clientType" >
                 <mat-radio-button value="new" (change)="onClientTypeChange($event)">New Client</mat-radio-button>
                 <mat-radio-button value="existing" (change)="onClientTypeChange($event)">Existing Client</mat-radio-button>

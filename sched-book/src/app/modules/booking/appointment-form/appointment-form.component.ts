@@ -70,8 +70,8 @@ export class AppointmentFormComponent implements OnInit {
 
   appointmentForm = this.formBuilder.group({
     apptDate: new FormControl(new Date(), [Validators.required]),
-    startTime: new FormControl(new Date(), [Validators.required]),
-    endTime: new FormControl(new Date(new Date().setHours(new Date().getHours() + 1)), [Validators.required]),
+    startTime: new FormControl(this.roundMinutes(new Date()), [Validators.required]),
+    endTime: new FormControl(this.roundMinutes(new Date(new Date().setHours(new Date().getHours() + 1))), [Validators.required]),
     clientType: new FormControl('new'),
     newClientName: new FormControl('', [this.requiredIfValidator(() =>
       this.appointmentForm.controls.clientType.valueChanges.subscribe(value => value === 'new' ? true : false))]),
@@ -83,6 +83,7 @@ export class AppointmentFormComponent implements OnInit {
     assignedEmployee: new FormControl('', [Validators.required]),
     notes: new FormControl('')
   });
+  minEndTime = this.roundMinutes(new Date());
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -102,6 +103,15 @@ export class AppointmentFormComponent implements OnInit {
       }
       return null;
     });
+  }
+
+  roundMinutes(originalDate: Date): Date {
+    const coeff = 1000 * 60 * 10;
+    return new Date(Math.ceil(originalDate.getTime() / coeff) * coeff);
+  }
+
+  onStartTimeChange(event): void {
+    this.minEndTime = event.value;
   }
 
   onClientTypeChange(event: MatRadioChange): void {
