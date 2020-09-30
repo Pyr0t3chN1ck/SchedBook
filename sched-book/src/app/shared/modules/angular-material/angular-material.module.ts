@@ -15,6 +15,8 @@ import { MatListModule } from '@angular/material/list';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -36,7 +38,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatListModule,
     ScrollingModule,
     MatDividerModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatRadioModule,
+    MatSelectModule,
   ]
 })
 export class AngularMaterialModule { }

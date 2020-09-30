@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfigurationPageModule } from './modules/configuration-page/configuration-page.module';
 import { AddressBookModule } from './modules/address-book/address-book.module';
+import { BookingModule } from './modules/booking/booking.module';
 import { AngularMaterialModule } from './shared/modules/angular-material/angular-material.module';
 import { SidenavComponent } from './modules/navigation/sidenav/sidenav.component';
 
@@ -21,6 +22,7 @@ import { SidenavComponent } from './modules/navigation/sidenav/sidenav.component
     CoreModule,
     ConfigurationPageModule,
     AddressBookModule,
+    BookingModule,
     AngularMaterialModule
   ],
   providers: [],

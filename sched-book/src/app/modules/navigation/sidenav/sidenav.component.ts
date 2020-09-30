@@ -8,7 +8,8 @@ import { Component, Input, OnInit } from '@angular/core';
 export class SidenavComponent implements OnInit {
   @Input() isFullMenu: boolean;
   navigationOptions = [
-    { title: 'Client', icon: 'groups', url: 'client'},
+    { title: 'Booking', icon: 'event', url: 'booking'},
+    { title: 'Client', icon: 'groups', url: 'clients'},
     { title: 'Configuration', icon: 'settings', url: 'configuration'},
   ];
   constructor() { }

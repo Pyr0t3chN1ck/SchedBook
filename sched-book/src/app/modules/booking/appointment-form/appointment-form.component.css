@@ -1,0 +1,13 @@
+mat-radio-button ~ mat-radio-button {
+    margin-left: 0.5em;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+mat-card-actions {
+    display: flex;
+    flex-flow: row-reverse;
+}

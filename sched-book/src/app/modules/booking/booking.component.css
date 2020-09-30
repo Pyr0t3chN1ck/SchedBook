@@ -1,0 +1,10 @@
+.booking-page-container {
+    display: flex;
+    flex-flow: row wrap;
+}
+.appointment-form-container {
+    width: 45%;
+}
+.current-appointments-container {
+    width: 45%;
+}

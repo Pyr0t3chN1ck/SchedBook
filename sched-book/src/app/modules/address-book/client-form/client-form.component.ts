@@ -1,8 +1,7 @@
 import { Component, OnInit, EventEmitter, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { PhoneNumber } from '../phone-number-input/phone-number-input.component';
-import { Client } from 'src/app/shared/models';
+import { Client, PhoneNumber } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-client-form',
