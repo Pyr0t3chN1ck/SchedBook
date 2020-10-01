@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CalendarEvent } from 'angular-calendar';
 
 @Component({
   selector: 'app-calendar-page',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./calendar-page.component.css']
 })
 export class CalendarPageComponent implements OnInit {
+  viewDate: Date = new Date();
+
+  events: CalendarEvent[] = [];
 
   constructor() { }
 

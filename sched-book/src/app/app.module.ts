@@ -9,6 +9,9 @@ import { AddressBookModule } from './modules/address-book/address-book.module';
 import { BookingModule } from './modules/booking/booking.module';
 import { AngularMaterialModule } from './shared/modules/angular-material/angular-material.module';
 import { SidenavComponent } from './modules/navigation/sidenav/sidenav.component';
+import { CalendarPageModule } from './modules/calendar-page/calendar-page.module';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 @NgModule({
   declarations: [
@@ -17,12 +20,17 @@ import { SidenavComponent } from './modules/navigation/sidenav/sidenav.component
   ],
   imports: [
     BrowserModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
     AppRoutingModule,
     BrowserAnimationsModule,
     CoreModule,
     ConfigurationPageModule,
     AddressBookModule,
     BookingModule,
+    CalendarPageModule,
     AngularMaterialModule
   ],
   providers: [],

@@ -1,4 +1,5 @@
 @import "~@danielmoncada/angular-datetime-picker/assets/style/picker.min.css";
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
 
 :root {
     --main-background-color: #DCDCDC;
