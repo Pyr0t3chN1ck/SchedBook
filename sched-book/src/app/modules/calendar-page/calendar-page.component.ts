@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CalendarEvent } from 'angular-calendar';
+import { CalendarEvent, CalendarView } from 'angular-calendar';
 
 @Component({
   selector: 'app-calendar-page',
@@ -8,12 +8,18 @@ import { CalendarEvent } from 'angular-calendar';
 })
 export class CalendarPageComponent implements OnInit {
   viewDate: Date = new Date();
-
   events: CalendarEvent[] = [];
+  scheduleView: CalendarView = CalendarView.Week;
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  get CalendarView() { return CalendarView; }
+
+  changeScheduleView(event): void {
+    this.scheduleView = event.value as CalendarView;
   }
 
 }

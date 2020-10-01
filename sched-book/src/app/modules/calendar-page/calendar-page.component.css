@@ -1,0 +1,8 @@
+h3 {
+    margin: 0px;
+}
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

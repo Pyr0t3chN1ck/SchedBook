@@ -1,4 +1,16 @@
-<mat-card>
-    <mwl-calendar-month-view [viewDate]="viewDate" [events]="events">
+<mat-card [ngSwitch]="scheduleView">
+    <div class="calendar-header">
+        <h3>{{ viewDate | calendarDate:(scheduleView + 'ViewTitle'):'en' }}</h3>
+        <mat-button-toggle-group [value]="scheduleView" (change)="changeScheduleView($event)">
+            <mat-button-toggle [value]="CalendarView.Month">Month</mat-button-toggle>
+            <mat-button-toggle [value]="CalendarView.Week">Week</mat-button-toggle>
+            <mat-button-toggle [value]="CalendarView.Day">Day</mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
+    <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events">
     </mwl-calendar-month-view>
+    <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events">
+    </mwl-calendar-week-view>
+    <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events">
+    </mwl-calendar-day-view>
 </mat-card>

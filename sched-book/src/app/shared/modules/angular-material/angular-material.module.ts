@@ -17,7 +17,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [],
@@ -41,6 +41,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatSidenavModule,
     MatRadioModule,
     MatSelectModule,
+    MatButtonToggleModule
   ]
 })
 export class AngularMaterialModule { }
