@@ -10,6 +10,10 @@ import { BookingModule } from './modules/booking/booking.module';
 import { AngularMaterialModule } from './shared/modules/angular-material/angular-material.module';
 import { SidenavComponent } from './modules/navigation/sidenav/sidenav.component';
 
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { environment } from '../environments/environment';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +27,9 @@ import { SidenavComponent } from './modules/navigation/sidenav/sidenav.component
     ConfigurationPageModule,
     AddressBookModule,
     BookingModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
