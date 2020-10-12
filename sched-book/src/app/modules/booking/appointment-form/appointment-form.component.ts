@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatRadioChange } from '@angular/material/radio';
 import { Client, NailService, PhoneNumber, Appointment, Employee } from 'src/app/shared/models';
+import { EmployeeService } from 'src/app/shared/services/employee.service';
 
 @Component({
   selector: 'app-appointment-form',
@@ -39,29 +40,7 @@ export class AppointmentFormComponent implements OnInit {
       email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: ''
     },
   ];
-  employees: Employee[] = [
-    {
-      id: '1', firstName: 'John', lastName: 'Smith'
-    },
-    {
-      id: '2', firstName: 'Jane', lastName: 'Doe'
-    },
-    {
-      id: '3', firstName: 'Orlando', lastName: 'Bloom'
-    },
-    {
-      id: '4', firstName: 'Chris', lastName: 'Evans'
-    },
-    {
-      id: '5', firstName: 'Clark', lastName: 'Kent'
-    },
-    {
-      id: '6', firstName: 'Peter', lastName: 'Parker'
-    },
-    {
-      id: '7', firstName: 'Bruce', lastName: 'Wayne'
-    },
-  ];
+  employees: Employee[];
   nailServices: NailService[] = [
     { id: '1', name: 'Manicure', price: 20.00 },
     { id: '2', name: 'Pedicure', price: 27.00 },
@@ -85,12 +64,21 @@ export class AppointmentFormComponent implements OnInit {
   });
   minEndTime = this.roundMinutes(new Date());
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private employeeService: EmployeeService) { }
 
   ngOnInit(): void {
     this.appointmentForm.controls.existingClient.disable();
     this.appointmentForm.controls.newClientName.enable();
     this.appointmentForm.controls.newClientPhoneNumber.enable();
+
+    this.employeeService.getEmployees().subscribe(data => {
+      this.employees = data.map(employee => {
+        return {
+          id: employee.payload.doc.id,
+          ...employee.payload.doc.data() as any
+        } as Employee;
+      });
+    });
   }
 
   requiredIfValidator(predicate) {
@@ -162,7 +150,7 @@ export class AppointmentFormComponent implements OnInit {
       clientName,
       clientPhoneNumber,
       nailServices: formControls.nailServices.value.map(index => this.nailServices[index]),
-      assignedEmployee: this.employees[formControls.assignedEmployee.value],
+      assignedEmployee: formControls.assignedEmployee.value,
       notes: formControls.notes.value
     };
     console.log(newAppt);

@@ -58,7 +58,7 @@
                     Nail Tech
                 </mat-label>
                 <mat-select formControlName="assignedEmployee">
-                    <mat-option *ngFor="let employee of employees; let i = index" [value]="i">
+                    <mat-option *ngFor="let employee of employees" [value]="employee.id">
                         {{ employee.firstName + ' ' + employee.lastName }}</mat-option>
                 </mat-select>
             </mat-form-field>
@@ -70,7 +70,7 @@
     </mat-card-content>
     <mat-card-actions>
         <button mat-raised-button color="primary" [disabled]="!appointmentForm.valid" (click)="onSave()">
-            Book 
+            Book
         </button>
     </mat-card-actions>
 </mat-card>
