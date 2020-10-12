@@ -1,1 +1,40 @@
-<p>client-card works!</p>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ displayedClient.firstName }} {{ displayedClient.lastName }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-tab-group>
+      <mat-tab label="Information">
+        <div>
+          <mat-label class="mat-h3 detail-subheading">Phone Number</mat-label>
+          <div>{{ displayedClient.phoneNumber }}</div>
+        </div>
+        <div>
+          <mat-label class="mat-h3 detail-subheading">Address</mat-label>
+          <div>{{ displayedClient.address }}</div>
+        </div>
+        <div>
+          <mat-label class="mat-h3 detail-subheading">Email</mat-label>
+          <div>{{ displayedClient.email }}</div>
+        </div>
+        <div>
+          <mat-label class="mat-h3 detail-subheading">Birthday</mat-label>
+          <div>{{ displayedClient.dateOfBirth }}</div>
+        </div>
+        <div>
+          <mat-label class="mat-h3 detail-subheading">Preferred Brands</mat-label>
+          <div>{{ displayedClient.brandPreference }}</div>
+        </div>
+        <div>
+          <mat-label class="mat-h3 detail-subheading">Preferred Colors</mat-label>
+          <div>{{ displayedClient.colorPreference }}</div>
+        </div>
+        <div>
+          <mat-label class="mat-h3 detail-subheading">General Notes</mat-label>
+          <div>{{ displayedClient.notes }}</div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Appointments"></mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>
