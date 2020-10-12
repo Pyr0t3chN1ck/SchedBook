@@ -46,6 +46,7 @@ export class ClientSearchComponent implements OnInit {
   @ViewChild(MatTable) searchResultTable: MatTable<Client>;
   @ViewChild(MatPaginator, { static: true }) searchResultTablePaginator: MatPaginator;
   tableColumns = ['name', 'address', 'phoneNumber', 'email', 'dob', 'actions'];
+  selectedClient: Client | null;
   searchText: string;
 
   constructor(private dialog: MatDialog) { }
