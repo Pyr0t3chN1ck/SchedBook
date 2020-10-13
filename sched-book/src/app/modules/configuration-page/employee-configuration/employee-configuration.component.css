@@ -1,4 +1,4 @@
-.nail-services-config-wrapper {
+.employee-config-wrapper {
   display: flex;
 }
 
@@ -14,7 +14,7 @@
   margin: 0.5em;
 }
 
-.nail-services-config-list {
+.employee-config-list {
   width: 90%;
   min-height: 250px;
   max-height: 500px;
@@ -24,7 +24,7 @@
   border-radius: 10px;
 }
 
-.nail-service-config-main {
+.employee-config-main {
   max-height: 500px;
   margin: 0.5em;
 }

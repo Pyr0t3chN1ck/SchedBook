@@ -2,7 +2,6 @@ import { Component, OnInit, Output, Input, OnChanges } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { NailService } from 'src/app/shared/models';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { NailServicesConfigurationComponent } from '../nail-services-configuration/nail-services-configuration.component';
 
 @Component({
   selector: 'app-nail-service-form',

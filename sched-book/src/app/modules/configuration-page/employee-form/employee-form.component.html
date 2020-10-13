@@ -1,0 +1,18 @@
+<h3>{{isAddEmployeeForm ? 'Add' : 'Edit'}} Employee</h3>
+<form [formGroup]="employeeForm">
+    <mat-form-field>
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName" />
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName" />
+    </mat-form-field>
+</form>
+<button mat-raised-button color="primary" [disabled]="!employeeForm.valid" (click)="onSave()">
+    {{isAddEmployeeForm ? 'Add' : 'Save'}}
+</button>
+<button *ngIf="!isAddEmployeeForm" class="delete-employee-button" mat-raised-button color="warn" [disabled]="!employeeForm.valid"
+    (click)="onDelete()">
+    Delete
+</button>
