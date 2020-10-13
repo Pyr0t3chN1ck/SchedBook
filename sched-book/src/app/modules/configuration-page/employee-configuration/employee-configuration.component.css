@@ -3,7 +3,10 @@
 }
 
 .lhs-wrapper {
+  display: flex;
   width: 20%;
+  flex-flow: column nowrap;
+  align-items: center;
 }
 
 .lhs-wrapper>button {
@@ -12,6 +15,7 @@
 }
 
 .employee-config-list {
+  width: 90%;
   min-height: 250px;
   max-height: 500px;
   overflow: auto;

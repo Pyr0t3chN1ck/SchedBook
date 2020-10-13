@@ -1,26 +1,30 @@
 .nail-services-config-wrapper {
-    display: flex;
+  display: flex;
 }
 
 .lhs-wrapper {
-    width: 20%;
+  display: flex;
+  width: 20%;
+  flex-flow: column nowrap;
+  align-items: center;
 }
 
 .lhs-wrapper>button {
-    width: 90%;
-    margin: 0.5em;
+  width: 90%;
+  margin: 0.5em;
 }
 
 .nail-services-config-list {
-    min-height: 250px;
-    max-height: 500px;
-    overflow: auto;
-    margin: 0.5em;
-    border: 0.1em solid lightgray;
-    border-radius: 10px;
+  width: 90%;
+  min-height: 250px;
+  max-height: 500px;
+  overflow: auto;
+  margin: 0.5em;
+  border: 0.1em solid lightgray;
+  border-radius: 10px;
 }
 
 .nail-service-config-main {
-    max-height: 500px;
-    margin: 0.5em;
+  max-height: 500px;
+  margin: 0.5em;
 }
