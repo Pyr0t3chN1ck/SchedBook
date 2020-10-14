@@ -40,7 +40,7 @@ export class NailServicesConfigurationComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  selectNailService() {
+  selectNailService(): void {
     this.selectedNailService = this.nailServices[this.nailServiceListEl.selectedOptions.selected[0].value];
   }
 
@@ -59,13 +59,13 @@ export class NailServicesConfigurationComponent implements OnInit {
     console.log('Edited Nail Service!');
   }
 
-  openAddServiceForm() {
+  openAddServiceForm(): void {
     this.showAddServiceForm = true;
     this.selectedNailService = null;
     this.nailServiceListEl.selectedOptions.clear();
   }
 
-  addService(newNailService: NailService) {
+  addService(newNailService: NailService): void {
     this.nailServices.unshift(newNailService);
     this.showAddServiceForm = false;
     console.log('Added Nail Service!');

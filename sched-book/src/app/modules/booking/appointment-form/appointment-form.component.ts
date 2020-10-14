@@ -93,7 +93,7 @@ export class AppointmentFormComponent implements OnInit {
     this.appointmentForm.controls.newClientPhoneNumber.enable();
   }
 
-  requiredIfValidator(predicate) {
+  requiredIfValidator(predicate): Validators {
     return (formControl => {
       if (!formControl.parent) {
         return null;

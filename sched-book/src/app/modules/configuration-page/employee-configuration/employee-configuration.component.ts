@@ -20,7 +20,7 @@ export class EmployeeConfigurationComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  selectEmployee() {
+  selectEmployee(): void {
     this.selectedEmployee = this.employees[this.employeeListEl.selectedOptions.selected[0].value];
   }
 
@@ -39,13 +39,13 @@ export class EmployeeConfigurationComponent implements OnInit {
     console.log('Edited Employee!');
   }
 
-  openAddEmployeeForm() {
+  openAddEmployeeForm(): void {
     this.showAddEmployeeForm = true;
     this.selectedEmployee = null;
     this.employeeListEl.selectedOptions.clear();
   }
 
-  addEmployee(newEmployee: Employee) {
+  addEmployee(newEmployee: Employee): void {
     this.employees.unshift(newEmployee);
     this.showAddEmployeeForm = false;
     console.log('Added Employee!');
