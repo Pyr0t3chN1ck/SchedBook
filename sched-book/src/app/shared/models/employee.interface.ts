@@ -1,5 +1,6 @@
 export interface Employee {
-    id: string;
-    firstName: string;
-    lastName: string;
+  id: string;
+  firstName: string;
+  lastName: string;
+  isDeleted: boolean;
 }

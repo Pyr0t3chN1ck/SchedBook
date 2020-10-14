@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, ValidatorFn, Validators } from '@angular/forms';
 import { MatRadioChange } from '@angular/material/radio';
 import { Client, NailService, PhoneNumber, Appointment, Employee } from 'src/app/shared/models';
 
@@ -12,60 +12,60 @@ export class AppointmentFormComponent implements OnInit {
   clients: Client[] = [
     {
       id: '1', firstName: 'John', lastName: 'Smith', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: ''
+      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: '', isDeleted: false
     },
     {
       id: '2', firstName: 'Jane', lastName: 'Doe', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: ''
+      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: '', isDeleted: false
     },
     {
       id: '3', firstName: 'Orlando', lastName: 'Bloom', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: ''
+      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: '', isDeleted: false
     },
     {
       id: '4', firstName: 'Chris', lastName: 'Evans', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: ''
+      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: '', isDeleted: false
     },
     {
       id: '5', firstName: 'Clark', lastName: 'Kent', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: ''
+      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: '', isDeleted: false
     },
     {
       id: '6', firstName: 'Peter', lastName: 'Parker', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: ''
+      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: '', isDeleted: false
     },
     {
       id: '7', firstName: 'Bruce', lastName: 'Wayne', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: ''
+      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: '', isDeleted: false
     },
   ];
   employees: Employee[] = [
     {
-      id: '1', firstName: 'John', lastName: 'Smith'
+      id: '1', firstName: 'John', lastName: 'Smith', isDeleted: false
     },
     {
-      id: '2', firstName: 'Jane', lastName: 'Doe'
+      id: '2', firstName: 'Jane', lastName: 'Doe', isDeleted: false
     },
     {
-      id: '3', firstName: 'Orlando', lastName: 'Bloom'
+      id: '3', firstName: 'Orlando', lastName: 'Bloom', isDeleted: false
     },
     {
-      id: '4', firstName: 'Chris', lastName: 'Evans'
+      id: '4', firstName: 'Chris', lastName: 'Evans', isDeleted: false
     },
     {
-      id: '5', firstName: 'Clark', lastName: 'Kent'
+      id: '5', firstName: 'Clark', lastName: 'Kent', isDeleted: false
     },
     {
-      id: '6', firstName: 'Peter', lastName: 'Parker'
+      id: '6', firstName: 'Peter', lastName: 'Parker', isDeleted: false
     },
     {
-      id: '7', firstName: 'Bruce', lastName: 'Wayne'
+      id: '7', firstName: 'Bruce', lastName: 'Wayne', isDeleted: false
     },
   ];
   nailServices: NailService[] = [
-    { id: '1', name: 'Manicure', price: 20.00 },
-    { id: '2', name: 'Pedicure', price: 27.00 },
-    { id: '3', name: 'Acrylics', price: 35.00 },
+    { id: '1', name: 'Manicure', price: 20.00, isDeleted: false },
+    { id: '2', name: 'Pedicure', price: 27.00, isDeleted: false },
+    { id: '3', name: 'Acrylics', price: 35.00, isDeleted: false },
   ];
 
   appointmentForm = this.formBuilder.group({
@@ -93,7 +93,7 @@ export class AppointmentFormComponent implements OnInit {
     this.appointmentForm.controls.newClientPhoneNumber.enable();
   }
 
-  requiredIfValidator(predicate): Validators {
+  requiredIfValidator(predicate): ValidatorFn {
     return (formControl => {
       if (!formControl.parent) {
         return null;
@@ -154,7 +154,7 @@ export class AppointmentFormComponent implements OnInit {
       clientPhoneNumber = this.clients[formControls.existingClient.value].phoneNumber;
     }
 
-    const newAppt: Appointment = {
+    const newAppt = {
       apptDate: formControls.apptDate.value,
       startTime,
       endTime,
