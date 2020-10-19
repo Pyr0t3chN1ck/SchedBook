@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "sched-book"
+  "defaultProject": "sched-book",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
