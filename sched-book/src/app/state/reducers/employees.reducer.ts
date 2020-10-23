@@ -24,10 +24,7 @@ const initialState: EmployeeState = {
 const reducerFunction = createReducer(
   initialState,
   on(actions.loadEmployeesSucceess, (oldState, action) => adapter.setAll(action.payload, oldState)),
-  on(actions.addEmployeeSuccess, (oldState, action) => {
-    const tempState = adapter.removeOne(action.oldId, oldState);
-    return adapter.addOne(action.payload, tempState);
-  }),
+  on(actions.addEmployeeSuccess, (oldState, action) => adapter.addOne(action.payload, oldState)),
   on(actions.updateEmployeeSucceess, (oldState, action) => adapter.updateOne({
     id: action.payload.id,
     changes: {

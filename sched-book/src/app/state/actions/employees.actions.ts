@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { EmployeeCreatePayload } from 'src/app/shared/models/employee-create-payload.interface';
+import { EmployeeCreatePayload } from 'src/app/shared/models/index';
 import { EmployeeEntity } from '../reducers/employees.reducer';
 
 // Loading employee actions
@@ -17,14 +17,12 @@ export const loadEmployeesFail = createAction(
   props<{ message: string }>()
 );
 
-
 // Adding employee actions
 export const addEmployee = createAction(
   '[employees] adding employee',
-  ({ firstName, lastName }: EmployeeCreatePayload) => ({
+  (createPayload: EmployeeCreatePayload) => ({
     payload: {
-      firstName,
-      lastName,
+      ...createPayload,
       isDeleted: false
     } as EmployeeEntity
   })
@@ -32,7 +30,7 @@ export const addEmployee = createAction(
 
 export const addEmployeeSuccess = createAction(
   '[employees] employee added successfully',
-  props<{ oldId: string, payload: EmployeeEntity }>()
+  props<{ payload: EmployeeEntity }>()
 );
 
 export const addEmployeeFail = createAction(
