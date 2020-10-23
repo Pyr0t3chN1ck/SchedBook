@@ -1,42 +1,55 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSelectionList } from '@angular/material/list';
+import { select, Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
 import { Employee } from 'src/app/shared/models';
+import { addEmployee, markEmployeeDeleted, updateEmployee } from 'src/app/state/actions/employees.actions';
+import { AppState, selectAllCurrentEmployees } from 'src/app/state/reducers';
 
 @Component({
   selector: 'app-employee-configuration',
   templateUrl: './employee-configuration.component.html',
   styleUrls: ['./employee-configuration.component.css']
 })
-export class EmployeeConfigurationComponent implements OnInit {
-  employees: Employee[] = [
-
-  ];
+export class EmployeeConfigurationComponent implements OnInit, OnDestroy {
+  subscriptions = new Subscription();
+  employees$: Observable<Employee[]>;
   @ViewChild('employeeListEl') employeeListEl: MatSelectionList;
   selectedEmployee: Employee = null;
   showAddEmployeeForm = false;
 
-  constructor() { }
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
+    this.employees$ = this.store.pipe(select(selectAllCurrentEmployees));
   }
 
   selectEmployee(): void {
-    this.selectedEmployee = this.employees[this.employeeListEl.selectedOptions.selected[0].value];
+    this.subscriptions.add(
+      this.employees$.subscribe(employees => {
+        this.selectedEmployee = employees.find(emp => emp.id === this.employeeListEl.selectedOptions.selected[0].value);
+      })
+    );
   }
 
   deleteEmployee(deletedEmployee: Employee): void {
-    this.employees = this.employees.filter(emp => emp.id !== deletedEmployee.id);
     this.selectedEmployee = null;
     this.employeeListEl.selectedOptions.clear();
-    console.log('Deleted Employee!');
+    this.store.dispatch(markEmployeeDeleted({ id: deletedEmployee.id }));
   }
 
   saveEmployeeEdit(editedEmployee: Employee): void {
     editedEmployee.id = this.selectedEmployee.id;
-    this.employees[this.employees.findIndex(emp => emp.id === this.selectedEmployee.id)] = editedEmployee;
+    const payload = {
+      ...editedEmployee,
+      oldValues: {
+        firstName: this.selectedEmployee.firstName,
+        lastName: this.selectedEmployee.lastName
+      }
+    };
     this.selectedEmployee = null;
     this.employeeListEl.selectedOptions.clear();
-    console.log('Edited Employee!');
+    this.store.dispatch(updateEmployee({ payload }));
   }
 
   openAddEmployeeForm(): void {
@@ -46,8 +59,11 @@ export class EmployeeConfigurationComponent implements OnInit {
   }
 
   addEmployee(newEmployee: Employee): void {
-    this.employees.unshift(newEmployee);
     this.showAddEmployeeForm = false;
-    console.log('Added Employee!');
+    this.store.dispatch(addEmployee({ firstName: newEmployee.firstName, lastName: newEmployee.lastName }));
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }

@@ -1,76 +1,78 @@
 <mat-card>
-    <mat-card-header>
-        <mat-card-title>Book Appointment</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <form [formGroup]="appointmentForm">
-            <mat-form-field>
-                <mat-label>Date</mat-label>
-                <input matInput [matDatepicker]="aptDatepicker" formControlName="apptDate">
-                <mat-datepicker-toggle matSuffix [for]="aptDatepicker"></mat-datepicker-toggle>
-                <mat-datepicker #aptDatepicker></mat-datepicker>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Start Time</mat-label>
-                <input matInput [owlDateTime]="startTimePicker" [owlDateTimeTrigger]="startTimePicker" formControlName="startTime" (dateTimeChange)="onStartTimeChange($event)"/>
-                <mat-icon matSuffix [owlDateTimeTrigger]="startTimePicker">access_time</mat-icon>
-            </mat-form-field>
-            <owl-date-time [pickerType]="'timer'" [hour12Timer]="true" [stepMinute]="5" #startTimePicker></owl-date-time>
-            <mat-form-field>
-                <mat-label>End Time</mat-label>
-                <input matInput [owlDateTime]="endTimePicker" [owlDateTimeTrigger]="endTimePicker" [min]="minEndTime" formControlName="endTime"/>
-                <mat-icon matSuffix [owlDateTimeTrigger]="endTimePicker">access_time</mat-icon>
-            </mat-form-field>
-            <owl-date-time [pickerType]="'timer'" [hour12Timer]="true" [stepMinute]="5" #endTimePicker></owl-date-time>
-            <mat-radio-group formControlName="clientType" >
-                <mat-radio-button value="new" (change)="onClientTypeChange($event)">New Client</mat-radio-button>
-                <mat-radio-button value="existing" (change)="onClientTypeChange($event)">Existing Client</mat-radio-button>
-            </mat-radio-group>
-            <mat-form-field>
-                <mat-label>Name</mat-label>
-                <input matInput formControlName="newClientName" />
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Phone Number</mat-label>
-                <app-phone-number-input matInput formControlName="newClientPhoneNumber"></app-phone-number-input>
-                <mat-icon matSuffix>phone</mat-icon>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>
-                    Client
-                </mat-label>
-                <mat-select formControlName="existingClient">
-                    <mat-option *ngFor="let client of clients; let i = index" [value]="i">
-                        {{ client.firstName + ' ' + client.lastName }}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>
-                    Services
-                </mat-label>
-                <mat-select multiple formControlName="nailServices">
-                    <mat-option *ngFor="let nailService of nailServices; let i = index" [value]="i">{{ nailService.name }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>
-                    Nail Tech
-                </mat-label>
-                <mat-select formControlName="assignedEmployee">
-                    <mat-option *ngFor="let employee of employees; let i = index" [value]="i">
-                        {{ employee.firstName + ' ' + employee.lastName }}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Notes</mat-label>
-                <textarea matInput formControlName="notes"></textarea>
-            </mat-form-field>
-        </form>
-    </mat-card-content>
-    <mat-card-actions>
-        <button mat-raised-button color="primary" [disabled]="!appointmentForm.valid" (click)="onSave()">
-            Book 
-        </button>
-    </mat-card-actions>
+  <mat-card-header>
+    <mat-card-title>Book Appointment</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="appointmentForm">
+      <mat-form-field>
+        <mat-label>Date</mat-label>
+        <input matInput [matDatepicker]="aptDatepicker" formControlName="apptDate">
+        <mat-datepicker-toggle matSuffix [for]="aptDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #aptDatepicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Start Time</mat-label>
+        <input matInput [owlDateTime]="startTimePicker" [owlDateTimeTrigger]="startTimePicker"
+          formControlName="startTime" (dateTimeChange)="onStartTimeChange($event)" />
+        <mat-icon matSuffix [owlDateTimeTrigger]="startTimePicker">access_time</mat-icon>
+      </mat-form-field>
+      <owl-date-time [pickerType]="'timer'" [hour12Timer]="true" [stepMinute]="5" #startTimePicker></owl-date-time>
+      <mat-form-field>
+        <mat-label>End Time</mat-label>
+        <input matInput [owlDateTime]="endTimePicker" [owlDateTimeTrigger]="endTimePicker" [min]="minEndTime"
+          formControlName="endTime" />
+        <mat-icon matSuffix [owlDateTimeTrigger]="endTimePicker">access_time</mat-icon>
+      </mat-form-field>
+      <owl-date-time [pickerType]="'timer'" [hour12Timer]="true" [stepMinute]="5" #endTimePicker></owl-date-time>
+      <mat-radio-group formControlName="clientType">
+        <mat-radio-button value="new" (change)="onClientTypeChange($event)">New Client</mat-radio-button>
+        <mat-radio-button value="existing" (change)="onClientTypeChange($event)">Existing Client</mat-radio-button>
+      </mat-radio-group>
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="newClientName" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Phone Number</mat-label>
+        <app-phone-number-input matInput formControlName="newClientPhoneNumber"></app-phone-number-input>
+        <mat-icon matSuffix>phone</mat-icon>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>
+          Client
+        </mat-label>
+        <mat-select formControlName="existingClient">
+          <mat-option *ngFor="let client of clients; let i = index" [value]="i">
+            {{ client.firstName + ' ' + client.lastName }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>
+          Services
+        </mat-label>
+        <mat-select multiple formControlName="nailServices">
+          <mat-option *ngFor="let nailService of nailServices; let i = index" [value]="i">{{ nailService.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>
+          Nail Tech
+        </mat-label>
+        <mat-select formControlName="assignedEmployee">
+          <mat-option *ngFor="let employee of (employees$ | async)" [value]="employee.id">
+            {{ employee.firstName + ' ' + employee.lastName }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Notes</mat-label>
+        <textarea matInput formControlName="notes"></textarea>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" [disabled]="!appointmentForm.valid" (click)="onSave()">
+      Book
+    </button>
+  </mat-card-actions>
 </mat-card>

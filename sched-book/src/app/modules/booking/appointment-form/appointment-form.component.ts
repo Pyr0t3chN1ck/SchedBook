@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, ValidatorFn, Validators } from '@angular/forms';
 import { MatRadioChange } from '@angular/material/radio';
+import { select, Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
 import { Client, NailService, PhoneNumber, Appointment, Employee } from 'src/app/shared/models';
+import { AppState, selectAllCurrentEmployees } from 'src/app/state/reducers';
 
 @Component({
   selector: 'app-appointment-form',
@@ -9,6 +12,7 @@ import { Client, NailService, PhoneNumber, Appointment, Employee } from 'src/app
   styleUrls: ['./appointment-form.component.css']
 })
 export class AppointmentFormComponent implements OnInit {
+  subscriptions = new Subscription();
   clients: Client[] = [
     {
       id: '1', firstName: 'John', lastName: 'Smith', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
@@ -39,29 +43,7 @@ export class AppointmentFormComponent implements OnInit {
       email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: '', isDeleted: false
     },
   ];
-  employees: Employee[] = [
-    {
-      id: '1', firstName: 'John', lastName: 'Smith', isDeleted: false
-    },
-    {
-      id: '2', firstName: 'Jane', lastName: 'Doe', isDeleted: false
-    },
-    {
-      id: '3', firstName: 'Orlando', lastName: 'Bloom', isDeleted: false
-    },
-    {
-      id: '4', firstName: 'Chris', lastName: 'Evans', isDeleted: false
-    },
-    {
-      id: '5', firstName: 'Clark', lastName: 'Kent', isDeleted: false
-    },
-    {
-      id: '6', firstName: 'Peter', lastName: 'Parker', isDeleted: false
-    },
-    {
-      id: '7', firstName: 'Bruce', lastName: 'Wayne', isDeleted: false
-    },
-  ];
+  employees$: Observable<Employee[]>;
   nailServices: NailService[] = [
     { id: '1', name: 'Manicure', price: 20.00, isDeleted: false },
     { id: '2', name: 'Pedicure', price: 27.00, isDeleted: false },
@@ -85,12 +67,13 @@ export class AppointmentFormComponent implements OnInit {
   });
   minEndTime = this.roundMinutes(new Date());
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private store: Store<AppState>) { }
 
   ngOnInit(): void {
     this.appointmentForm.controls.existingClient.disable();
     this.appointmentForm.controls.newClientName.enable();
     this.appointmentForm.controls.newClientPhoneNumber.enable();
+    this.employees$ = this.store.pipe(select(selectAllCurrentEmployees));
   }
 
   requiredIfValidator(predicate): ValidatorFn {
@@ -131,6 +114,7 @@ export class AppointmentFormComponent implements OnInit {
     let clientId = '-1';
     let clientName = '';
     let clientPhoneNumber = '';
+    let selectedEmployee: Employee;
     const apptDate = formControls.apptDate.value as Date;
     const startTime = formControls.startTime.value as Date;
     const endTime = formControls.endTime.value as Date;
@@ -141,6 +125,7 @@ export class AppointmentFormComponent implements OnInit {
     endTime.setDate(apptDate.getDate());
     endTime.setMonth(apptDate.getMonth());
     endTime.setFullYear(apptDate.getFullYear());
+
 
     if (formControls.clientType.value === 'new') {
       const phoneNumberObj = formControls.newClientPhoneNumber.value as PhoneNumber;
@@ -154,6 +139,12 @@ export class AppointmentFormComponent implements OnInit {
       clientPhoneNumber = this.clients[formControls.existingClient.value].phoneNumber;
     }
 
+    this.subscriptions.add(
+      this.employees$.subscribe(employees => {
+        selectedEmployee = employees.find(emp => emp.id === formControls.assignedEmployee.value);
+      })
+    );
+
     const newAppt = {
       apptDate: formControls.apptDate.value,
       startTime,
@@ -162,9 +153,9 @@ export class AppointmentFormComponent implements OnInit {
       clientName,
       clientPhoneNumber,
       nailServices: formControls.nailServices.value.map(index => this.nailServices[index]),
-      assignedEmployee: this.employees[formControls.assignedEmployee.value],
+      assignedEmployee: selectedEmployee,
       notes: formControls.notes.value
-    };
+    } as Appointment;
     console.log(newAppt);
   }
 

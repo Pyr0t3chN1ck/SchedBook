@@ -2,8 +2,6 @@ import { createAction, props } from '@ngrx/store';
 import { EmployeeCreatePayload } from 'src/app/shared/models/employee-create-payload.interface';
 import { EmployeeEntity } from '../reducers/employees.reducer';
 
-let currentId = 1;
-
 // Loading employee actions
 export const loadEmployees = createAction(
   '[employees] loading employee data'
@@ -25,7 +23,6 @@ export const addEmployee = createAction(
   '[employees] adding employee',
   ({ firstName, lastName }: EmployeeCreatePayload) => ({
     payload: {
-      id: 'E' + currentId++,
       firstName,
       lastName,
       isDeleted: false
@@ -57,7 +54,15 @@ export const updateEmployee = createAction(
 );
 
 export const updateEmployeeSucceess = createAction(
-  '[employees] updated employee data successfully'
+  '[employees] updated employee data successfully',
+  props<{
+    payload: {
+      id: string,
+      firstName: string,
+      lastName: string,
+      oldValues: { firstName: string, lastName: string }
+    }
+  }>()
 );
 
 export const updateEmployeeFail = createAction(
@@ -80,10 +85,11 @@ export const markEmployeeDeleted = createAction(
 );
 
 export const markEmployeeDeletedSuccess = createAction(
-  '[employees] marking employee as deleted success'
+  '[employees] marking employee as deleted success',
+  props<{ id: string }>()
 );
 
 export const markEmployeeDeletedFail = createAction(
   '[employees] marking employee as deleted failed',
-  props<{ id: string }>()
+  props<{ message: string }>()
 );

@@ -13,11 +13,29 @@ export interface EmployeeState extends EntityState<EmployeeEntity> { }
 
 export const adapter = createEntityAdapter<EmployeeEntity>();
 
-const initialState = adapter.getInitialState();
+// const initialState = adapter.getInitialState();
+const initialState: EmployeeState = {
+  ids: ['1'],
+  entities: {
+    1: { id: '1', firstName: 'Tip', lastName: 'Letdara', isDeleted: false }
+  }
+};
 
 const reducerFunction = createReducer(
   initialState,
-  on(actions.loadEmployeesSucceess, (oldState, action) => adapter.setAll(action.payload, oldState))
+  on(actions.loadEmployeesSucceess, (oldState, action) => adapter.setAll(action.payload, oldState)),
+  on(actions.addEmployeeSuccess, (oldState, action) => {
+    const tempState = adapter.removeOne(action.oldId, oldState);
+    return adapter.addOne(action.payload, tempState);
+  }),
+  on(actions.updateEmployeeSucceess, (oldState, action) => adapter.updateOne({
+    id: action.payload.id,
+    changes: {
+      firstName: action.payload.oldValues.firstName,
+      lastName: action.payload.oldValues.lastName
+    }
+  }, oldState)),
+  on(actions.markEmployeeDeletedSuccess, (oldState, action) => adapter.removeOne(action.id, oldState))
 );
 
 export function reducer(state: EmployeeState = initialState, action: Action): EmployeeState {
