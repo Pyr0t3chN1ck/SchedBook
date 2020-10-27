@@ -18,7 +18,7 @@ export const loadClientsFail = createAction(
 );
 
 // Adding client actions
-export const addClient = createAction(
+export const createClient = createAction(
   '[clients] adding client',
   (createPayload: ClientCreatePayload) => ({
     payload: {
@@ -28,12 +28,12 @@ export const addClient = createAction(
   })
 );
 
-export const addClientSuccess = createAction(
+export const createClientSuccess = createAction(
   '[clients] client added successfully',
   props<{ payload: ClientEntity }>()
 );
 
-export const addClientFail = createAction(
+export const createClientFail = createAction(
   '[clients] client added failed',
   props<{ message: string, payload: ClientEntity }>()
 );
@@ -45,25 +45,25 @@ export const updateClient = createAction(
   props<{
     payload: {
       id: string,
-      firstName: string;
-      lastName: string;
-      address: string;
-      phoneNumber: string;
-      email: string;
-      dateOfBirth: Date;
-      brandPreference: string;
-      colorPreference: string;
-      notes: string;
+      firstName: string,
+      lastName: string,
+      address: string,
+      phoneNumber: string,
+      email: string,
+      dateOfBirth: Date,
+      brandPreference: string,
+      colorPreference: string,
+      notes: string,
       oldValues: {
-        firstName: string;
-        lastName: string;
-        address: string;
-        phoneNumber: string;
-        email: string;
-        dateOfBirth: Date;
-        brandPreference: string;
-        colorPreference: string;
-        notes: string;
+        firstName: string,
+        lastName: string,
+        address: string,
+        phoneNumber: string,
+        email: string,
+        dateOfBirth: Date,
+        brandPreference: string,
+        colorPreference: string,
+        notes: string,
       }
     }
   }>()
@@ -74,25 +74,25 @@ export const updateClientSuccess = createAction(
   props<{
     payload: {
       id: string,
-      firstName: string;
-      lastName: string;
-      address: string;
-      phoneNumber: string;
-      email: string;
-      dateOfBirth: Date;
-      brandPreference: string;
-      colorPreference: string;
-      notes: string;
+      firstName: string,
+      lastName: string,
+      address: string,
+      phoneNumber: string,
+      email: string,
+      dateOfBirth: Date,
+      brandPreference: string,
+      colorPreference: string,
+      notes: string,
       oldValues: {
-        firstName: string;
-        lastName: string;
-        address: string;
-        phoneNumber: string;
-        email: string;
-        dateOfBirth: Date;
-        brandPreference: string;
-        colorPreference: string;
-        notes: string;
+        firstName: string,
+        lastName: string,
+        address: string,
+        phoneNumber: string,
+        email: string,
+        dateOfBirth: Date,
+        brandPreference: string,
+        colorPreference: string,
+        notes: string,
       }
     }
   }>()
@@ -104,25 +104,25 @@ export const updateClientFail = createAction(
     message: string,
     payload: {
       id: string,
-      firstName: string;
-      lastName: string;
-      address: string;
-      phoneNumber: string;
-      email: string;
-      dateOfBirth: Date;
-      brandPreference: string;
-      colorPreference: string;
-      notes: string;
+      firstName: string,
+      lastName: string,
+      address: string,
+      phoneNumber: string,
+      email: string,
+      dateOfBirth: Date,
+      brandPreference: string,
+      colorPreference: string,
+      notes: string,
       oldValues: {
-        firstName: string;
-        lastName: string;
-        address: string;
-        phoneNumber: string;
-        email: string;
-        dateOfBirth: Date;
-        brandPreference: string;
-        colorPreference: string;
-        notes: string;
+        firstName: string,
+        lastName: string,
+        address: string,
+        phoneNumber: string,
+        email: string,
+        dateOfBirth: Date,
+        brandPreference: string,
+        colorPreference: string,
+        notes: string,
       }
     }
   }>()
@@ -130,16 +130,16 @@ export const updateClientFail = createAction(
 
 // Delete client actions
 export const markClientDeleted = createAction(
-  '[employees] marking client as deleted',
+  '[clients] marking client as deleted',
   props<{ id: string }>()
 );
 
 export const markClientDeletedSuccess = createAction(
-  '[employees] marking client as deleted success',
+  '[clients] marking client as deleted success',
   props<{ id: string }>()
 );
 
 export const markClientDeletedFail = createAction(
-  '[employees] marking client as deleted failed',
+  '[clients] marking client as deleted failed',
   props<{ message: string }>()
 );

@@ -42,7 +42,7 @@
           Client
         </mat-label>
         <mat-select formControlName="existingClient">
-          <mat-option *ngFor="let client of clients; let i = index" [value]="i">
+          <mat-option *ngFor="let client of (clients$ | async);" [value]="client.id">
             {{ client.firstName + ' ' + client.lastName }}</mat-option>
         </mat-select>
       </mat-form-field>

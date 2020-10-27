@@ -18,7 +18,7 @@ export const loadEmployeesFail = createAction(
 );
 
 // Adding employee actions
-export const addEmployee = createAction(
+export const createEmployee = createAction(
   '[employees] adding employee',
   (createPayload: EmployeeCreatePayload) => ({
     payload: {
@@ -28,12 +28,12 @@ export const addEmployee = createAction(
   })
 );
 
-export const addEmployeeSuccess = createAction(
+export const createEmployeeSuccess = createAction(
   '[employees] employee added successfully',
   props<{ payload: EmployeeEntity }>()
 );
 
-export const addEmployeeFail = createAction(
+export const createEmployeeFail = createAction(
   '[employees] employee added failed',
   props<{ message: string, payload: EmployeeEntity }>()
 );

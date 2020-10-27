@@ -3,7 +3,7 @@ import { MatSelectionList } from '@angular/material/list';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { Employee } from 'src/app/shared/models';
-import { addEmployee, markEmployeeDeleted, updateEmployee } from 'src/app/state/actions/employees.actions';
+import { createEmployee, markEmployeeDeleted, updateEmployee } from 'src/app/state/actions/employees.actions';
 import { AppState, selectAllCurrentEmployees } from 'src/app/state/reducers';
 
 @Component({
@@ -60,7 +60,7 @@ export class EmployeeConfigurationComponent implements OnInit, OnDestroy {
 
   addEmployee(newEmployee: Employee): void {
     this.showAddEmployeeForm = false;
-    this.store.dispatch(addEmployee({ firstName: newEmployee.firstName, lastName: newEmployee.lastName }));
+    this.store.dispatch(createEmployee({ firstName: newEmployee.firstName, lastName: newEmployee.lastName }));
   }
 
   ngOnDestroy(): void {
