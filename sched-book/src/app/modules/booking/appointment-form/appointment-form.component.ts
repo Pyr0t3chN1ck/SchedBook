@@ -4,7 +4,7 @@ import { MatRadioChange } from '@angular/material/radio';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { Client, NailService, PhoneNumber, Appointment, Employee } from 'src/app/shared/models';
-import { AppState, selectAllCurrentClients, selectAllCurrentEmployees } from 'src/app/state/reducers';
+import { AppState, selectAllCurrentClients, selectAllCurrentEmployees, selectAllCurrentNailSerices } from 'src/app/state/reducers';
 
 @Component({
   selector: 'app-appointment-form',
@@ -15,11 +15,7 @@ export class AppointmentFormComponent implements OnInit, OnDestroy {
   subscriptions = new Subscription();
   clients$: Observable<Client[]>;
   employees$: Observable<Employee[]>;
-  nailServices: NailService[] = [
-    { id: '1', name: 'Manicure', price: 20.00, isDeleted: false },
-    { id: '2', name: 'Pedicure', price: 27.00, isDeleted: false },
-    { id: '3', name: 'Acrylics', price: 35.00, isDeleted: false },
-  ];
+  nailServices$: Observable<NailService[]>;
 
   appointmentForm = this.formBuilder.group({
     apptDate: new FormControl(new Date(), [Validators.required]),
@@ -46,6 +42,7 @@ export class AppointmentFormComponent implements OnInit, OnDestroy {
     this.appointmentForm.controls.newClientPhoneNumber.enable();
     this.employees$ = this.store.pipe(select(selectAllCurrentEmployees));
     this.clients$ = this.store.pipe(select(selectAllCurrentClients));
+    this.nailServices$ = this.store.pipe(select(selectAllCurrentNailSerices));
   }
 
   requiredIfValidator(predicate): ValidatorFn {
@@ -87,6 +84,7 @@ export class AppointmentFormComponent implements OnInit, OnDestroy {
     let clientName = '';
     let clientPhoneNumber = '';
     let selectedEmployee: Employee;
+    let selectedNailServices: NailService[];
     const apptDate = formControls.apptDate.value as Date;
     const startTime = formControls.startTime.value as Date;
     const endTime = formControls.endTime.value as Date;
@@ -121,6 +119,12 @@ export class AppointmentFormComponent implements OnInit, OnDestroy {
       })
     );
 
+    this.subscriptions.add(
+      this.nailServices$.subscribe(nailServices => {
+        selectedNailServices = formControls.nailServices.value.map(id => nailServices.find(ns => ns.id === id));
+      })
+    );
+
     const newAppt = {
       apptDate: formControls.apptDate.value,
       startTime,
@@ -128,7 +132,7 @@ export class AppointmentFormComponent implements OnInit, OnDestroy {
       clientId,
       clientName,
       clientPhoneNumber,
-      nailServices: formControls.nailServices.value.map(index => this.nailServices[index]),
+      nailServices: selectedNailServices,
       assignedEmployee: selectedEmployee,
       notes: formControls.notes.value
     } as Appointment;

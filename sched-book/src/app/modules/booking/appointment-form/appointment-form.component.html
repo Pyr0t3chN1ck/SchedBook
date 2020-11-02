@@ -51,7 +51,8 @@
           Services
         </mat-label>
         <mat-select multiple formControlName="nailServices">
-          <mat-option *ngFor="let nailService of nailServices; let i = index" [value]="i">{{ nailService.name }}
+          <mat-option *ngFor="let nailService of (nailServices$ | async)" [value]="nailService.id">
+            {{ nailService.name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
