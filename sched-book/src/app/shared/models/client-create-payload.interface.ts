@@ -1,5 +1,4 @@
-export interface Client {
-  id: string;
+export interface ClientCreatePayload {
   firstName: string;
   lastName: string;
   address: string;
@@ -9,5 +8,4 @@ export interface Client {
   brandPreference: string;
   colorPreference: string;
   notes: string;
-  isDeleted: boolean;
 }

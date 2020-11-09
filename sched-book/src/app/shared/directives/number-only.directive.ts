@@ -37,6 +37,7 @@ export class NumberOnlyDirective {
   }
 
   @HostListener('keydown', ['$event'])
+  // tslint:disable-next-line: typedef
   onKeyDown(e: KeyboardEvent) {
     if (
       this.navigationKeys.indexOf(e.key) > -1 || // Allow: navigation keys: backspace, delete, arrows etc.
@@ -59,6 +60,7 @@ export class NumberOnlyDirective {
   }
 
   @HostListener('paste', ['$event'])
+  // tslint:disable-next-line: typedef
   onPaste(event: ClipboardEvent) {
     event.preventDefault();
     const pastedInput: string = event.clipboardData
@@ -68,6 +70,7 @@ export class NumberOnlyDirective {
   }
 
   @HostListener('drop', ['$event'])
+  // tslint:disable-next-line: typedef
   onDrop(event: DragEvent) {
     event.preventDefault();
     const textData = event.dataTransfer.getData('text').replace(/\D/g, '');

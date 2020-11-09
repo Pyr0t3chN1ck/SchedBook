@@ -6,7 +6,7 @@
     </button>
     <div class="employee-config-list">
       <mat-selection-list #employeeListEl [multiple]="false" (selectionChange)="selectEmployee()">
-        <mat-list-option *ngFor="let employee of employees; let i = index" [value]="i">
+        <mat-list-option *ngFor="let employee of (employees$ | async);" [value]="employee.id">
           {{employee.firstName}} {{employee.lastName}}
         </mat-list-option>
       </mat-selection-list>

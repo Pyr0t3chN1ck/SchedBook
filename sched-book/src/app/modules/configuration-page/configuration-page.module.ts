@@ -11,7 +11,12 @@ import { EmployeeFormComponent } from './employee-form/employee-form.component';
 
 
 @NgModule({
-  declarations: [ConfigurationPageComponent, NailServicesConfigurationComponent, NailServiceFormComponent, EmployeeConfigurationComponent, EmployeeFormComponent],
+  declarations: [
+    ConfigurationPageComponent,
+    NailServicesConfigurationComponent,
+    NailServiceFormComponent,
+    EmployeeConfigurationComponent,
+    EmployeeFormComponent],
   imports: [
     CommonModule,
     AngularMaterialModule,

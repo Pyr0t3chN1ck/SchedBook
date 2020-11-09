@@ -1,72 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, ValidatorFn, Validators } from '@angular/forms';
 import { MatRadioChange } from '@angular/material/radio';
-import { Client, NailService, PhoneNumber, Appointment, Employee } from 'src/app/shared/models';
+import { select, Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { Client, NailService, PhoneNumber, Employee, AppointmentCreatePayload } from 'src/app/shared/models';
+import { createAppointment } from 'src/app/state/actions/appointments.actions';
+import { AppState, selectAllCurrentClients, selectAllCurrentEmployees, selectAllCurrentNailServices } from 'src/app/state/reducers';
 
 @Component({
   selector: 'app-appointment-form',
   templateUrl: './appointment-form.component.html',
   styleUrls: ['./appointment-form.component.css']
 })
-export class AppointmentFormComponent implements OnInit {
-  clients: Client[] = [
-    {
-      id: '1', firstName: 'John', lastName: 'Smith', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: ''
-    },
-    {
-      id: '2', firstName: 'Jane', lastName: 'Doe', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: ''
-    },
-    {
-      id: '3', firstName: 'Orlando', lastName: 'Bloom', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: ''
-    },
-    {
-      id: '4', firstName: 'Chris', lastName: 'Evans', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: ''
-    },
-    {
-      id: '5', firstName: 'Clark', lastName: 'Kent', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: ''
-    },
-    {
-      id: '6', firstName: 'Peter', lastName: 'Parker', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: ''
-    },
-    {
-      id: '7', firstName: 'Bruce', lastName: 'Wayne', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: ''
-    },
-  ];
-  employees: Employee[] = [
-    {
-      id: '1', firstName: 'John', lastName: 'Smith'
-    },
-    {
-      id: '2', firstName: 'Jane', lastName: 'Doe'
-    },
-    {
-      id: '3', firstName: 'Orlando', lastName: 'Bloom'
-    },
-    {
-      id: '4', firstName: 'Chris', lastName: 'Evans'
-    },
-    {
-      id: '5', firstName: 'Clark', lastName: 'Kent'
-    },
-    {
-      id: '6', firstName: 'Peter', lastName: 'Parker'
-    },
-    {
-      id: '7', firstName: 'Bruce', lastName: 'Wayne'
-    },
-  ];
-  nailServices: NailService[] = [
-    { id: '1', name: 'Manicure', price: 20.00 },
-    { id: '2', name: 'Pedicure', price: 27.00 },
-    { id: '3', name: 'Acrylics', price: 35.00 },
-  ];
+export class AppointmentFormComponent implements OnInit, OnDestroy {
+  subscriptions = new Subscription();
+  clients$: Observable<Client[]>;
+  employees$: Observable<Employee[]>;
+  nailServices$: Observable<NailService[]>;
 
   appointmentForm = this.formBuilder.group({
     apptDate: new FormControl(new Date(), [Validators.required]),
@@ -85,15 +35,18 @@ export class AppointmentFormComponent implements OnInit {
   });
   minEndTime = this.roundMinutes(new Date());
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private store: Store<AppState>) { }
 
   ngOnInit(): void {
     this.appointmentForm.controls.existingClient.disable();
     this.appointmentForm.controls.newClientName.enable();
     this.appointmentForm.controls.newClientPhoneNumber.enable();
+    this.employees$ = this.store.pipe(select(selectAllCurrentEmployees));
+    this.clients$ = this.store.pipe(select(selectAllCurrentClients));
+    this.nailServices$ = this.store.pipe(select(selectAllCurrentNailServices));
   }
 
-  requiredIfValidator(predicate) {
+  requiredIfValidator(predicate): ValidatorFn {
     return (formControl => {
       if (!formControl.parent) {
         return null;
@@ -131,6 +84,8 @@ export class AppointmentFormComponent implements OnInit {
     let clientId = '-1';
     let clientName = '';
     let clientPhoneNumber = '';
+    let selectedEmployee: Employee;
+    let selectedNailServices: NailService[];
     const apptDate = formControls.apptDate.value as Date;
     const startTime = formControls.startTime.value as Date;
     const endTime = formControls.endTime.value as Date;
@@ -142,30 +97,51 @@ export class AppointmentFormComponent implements OnInit {
     endTime.setMonth(apptDate.getMonth());
     endTime.setFullYear(apptDate.getFullYear());
 
+
     if (formControls.clientType.value === 'new') {
       const phoneNumberObj = formControls.newClientPhoneNumber.value as PhoneNumber;
       clientName = formControls.newClientName.value;
       clientPhoneNumber = phoneNumberObj.area + phoneNumberObj.exchange + phoneNumberObj.subscriber;
     }
     else if (formControls.clientType.value === 'existing') {
-      clientId = this.clients[formControls.existingClient.value].id;
-      clientName = this.clients[formControls.existingClient.value].firstName + ' '
-        + this.clients[formControls.existingClient.value].lastName;
-      clientPhoneNumber = this.clients[formControls.existingClient.value].phoneNumber;
+      let selectedClient: Client;
+      this.subscriptions.add(this.clients$.subscribe(clients => {
+        selectedClient = clients.find(client => client.id === formControls.existingClient.value);
+      }));
+      clientId = selectedClient.id;
+      clientName = selectedClient.firstName + ' '
+        + selectedClient.lastName;
+      clientPhoneNumber = selectedClient.phoneNumber;
     }
 
-    const newAppt: Appointment = {
+    this.subscriptions.add(
+      this.employees$.subscribe(employees => {
+        selectedEmployee = employees.find(emp => emp.id === formControls.assignedEmployee.value);
+      })
+    );
+
+    this.subscriptions.add(
+      this.nailServices$.subscribe(nailServices => {
+        selectedNailServices = formControls.nailServices.value.map(id => nailServices.find(ns => ns.id === id));
+      })
+    );
+
+    const newAppt = {
       apptDate: formControls.apptDate.value,
       startTime,
       endTime,
       clientId,
       clientName,
       clientPhoneNumber,
-      nailServices: formControls.nailServices.value.map(index => this.nailServices[index]),
-      assignedEmployee: this.employees[formControls.assignedEmployee.value],
+      nailServices: selectedNailServices.map(ns => ns.id),
+      assignedEmployee: selectedEmployee.id,
       notes: formControls.notes.value
-    };
-    console.log(newAppt);
+    } as AppointmentCreatePayload;
+    this.store.dispatch(createAppointment(newAppt));
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
 }
