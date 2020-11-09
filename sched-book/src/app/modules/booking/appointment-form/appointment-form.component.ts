@@ -3,8 +3,9 @@ import { FormBuilder, FormControl, ValidatorFn, Validators } from '@angular/form
 import { MatRadioChange } from '@angular/material/radio';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { Client, NailService, PhoneNumber, Appointment, Employee } from 'src/app/shared/models';
-import { AppState, selectAllCurrentClients, selectAllCurrentEmployees, selectAllCurrentNailSerices } from 'src/app/state/reducers';
+import { Client, NailService, PhoneNumber, Employee, AppointmentCreatePayload } from 'src/app/shared/models';
+import { createAppointment } from 'src/app/state/actions/appointments.actions';
+import { AppState, selectAllCurrentClients, selectAllCurrentEmployees, selectAllCurrentNailServices } from 'src/app/state/reducers';
 
 @Component({
   selector: 'app-appointment-form',
@@ -42,7 +43,7 @@ export class AppointmentFormComponent implements OnInit, OnDestroy {
     this.appointmentForm.controls.newClientPhoneNumber.enable();
     this.employees$ = this.store.pipe(select(selectAllCurrentEmployees));
     this.clients$ = this.store.pipe(select(selectAllCurrentClients));
-    this.nailServices$ = this.store.pipe(select(selectAllCurrentNailSerices));
+    this.nailServices$ = this.store.pipe(select(selectAllCurrentNailServices));
   }
 
   requiredIfValidator(predicate): ValidatorFn {
@@ -132,11 +133,11 @@ export class AppointmentFormComponent implements OnInit, OnDestroy {
       clientId,
       clientName,
       clientPhoneNumber,
-      nailServices: selectedNailServices,
-      assignedEmployee: selectedEmployee,
+      nailServices: selectedNailServices.map(ns => ns.id),
+      assignedEmployee: selectedEmployee.id,
       notes: formControls.notes.value
-    } as Appointment;
-    console.log(newAppt);
+    } as AppointmentCreatePayload;
+    this.store.dispatch(createAppointment(newAppt));
   }
 
   ngOnDestroy(): void {

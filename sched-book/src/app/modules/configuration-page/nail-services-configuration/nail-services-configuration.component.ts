@@ -3,7 +3,7 @@ import { NailService } from '../../../shared/models';
 import { MatSelectionList } from '@angular/material/list';
 import { Observable, Subscription } from 'rxjs';
 import { select, Store } from '@ngrx/store';
-import { AppState, selectAllCurrentNailSerices } from 'src/app/state/reducers';
+import { AppState, selectAllCurrentNailServices } from 'src/app/state/reducers';
 import { createNailService, markNailServiceDeleted, updateNailService } from 'src/app/state/actions/nail-services.actions';
 
 @Component({
@@ -21,7 +21,7 @@ export class NailServicesConfigurationComponent implements OnInit, OnDestroy {
   constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
-    this.nailServices$ = this.store.pipe(select(selectAllCurrentNailSerices));
+    this.nailServices$ = this.store.pipe(select(selectAllCurrentNailServices));
   }
 
   selectNailService(): void {

@@ -54,7 +54,7 @@ export const selectAllCurrentNailServices = createSelector(
 
 export const selectAllAppointments = createSelector(
   selectAllAppointmentsEntities,
-  appts => appts.filter(appt => appt.apptDate >= new Date().)
+  appts => appts.filter(appt => appt.apptDate >= new Date(new Date().setFullYear(new Date().getFullYear() - 1)))
 );
 
 export const selectMessageType = createSelector(
