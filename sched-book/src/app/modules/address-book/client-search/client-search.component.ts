@@ -3,8 +3,12 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { ClientFormComponent } from '../client-form/client-form.component';
-import { Client } from 'src/app/shared/models';
+import { Client, ClientCreatePayload } from 'src/app/shared/models';
 import { DeleteClientDialogComponent } from '../delete-client-dialog/delete-client-dialog.component';
+import { Store } from '@ngrx/store';
+import { AppState, selectAllCurrentClients } from 'src/app/state/reducers';
+import { Subscription } from 'rxjs';
+import { createClient, markClientDeleted, updateClient } from 'src/app/state/actions/clients.actions';
 
 @Component({
   selector: 'app-client-search',
@@ -13,45 +17,21 @@ import { DeleteClientDialogComponent } from '../delete-client-dialog/delete-clie
 })
 
 export class ClientSearchComponent implements OnInit {
-  dataSource = new MatTableDataSource<Client>([
-    {
-      id: '1', firstName: 'John', lastName: 'Smith', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: ''
-    },
-    {
-      id: '2', firstName: 'Jane', lastName: 'Doe', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: ''
-    },
-    {
-      id: '3', firstName: 'Orlando', lastName: 'Bloom', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: ''
-    },
-    {
-      id: '4', firstName: 'Chris', lastName: 'Evans', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: ''
-    },
-    {
-      id: '5', firstName: 'Clark', lastName: 'Kent', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: ''
-    },
-    {
-      id: '6', firstName: 'Peter', lastName: 'Parker', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: ''
-    },
-    {
-      id: '7', firstName: 'Bruce', lastName: 'Wayne', address: '123 City Ave, Cleveland, OH 44221', phoneNumber: '1234567890',
-      email: 'testmail@email.com', dateOfBirth: new Date(), brandPreference: '', colorPreference: '', notes: ''
-    },
-  ]);
+  subscriptions = new Subscription();
+  dataSource = new MatTableDataSource<Client>();
   @ViewChild(MatTable) searchResultTable: MatTable<Client>;
   @ViewChild(MatPaginator, { static: true }) searchResultTablePaginator: MatPaginator;
-  tableColumns = ['name', 'address', 'phoneNumber', 'email', 'dob', 'actions'];
+  tableColumns = ['name', 'address', 'phoneNumber', 'email', 'actions'];
+  selectedClient: Client | null;
   searchText: string;
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private store: Store<AppState>) { }
 
   ngOnInit(): void {
-    this.dataSource.paginator = this.searchResultTablePaginator;
+    this.store.select(selectAllCurrentClients).subscribe(clients => {
+      this.dataSource = new MatTableDataSource<Client>(clients as Client[]);
+      this.dataSource.paginator = this.searchResultTablePaginator;
+    });
   }
 
   search(): void {
@@ -67,10 +47,17 @@ export class ClientSearchComponent implements OnInit {
   }
 
   addClient(newClient: Client): void {
-    const data = this.dataSource.data;
-    data.push(newClient);
-    this.dataSource.data = data;
-    console.log('Added New Client!');
+    this.store.dispatch(createClient({
+      address: newClient.address,
+      brandPreference: newClient.brandPreference,
+      colorPreference: newClient.colorPreference,
+      dateOfBirth: newClient.dateOfBirth,
+      email: newClient.email,
+      firstName: newClient.firstName,
+      lastName: newClient.lastName,
+      notes: newClient.notes,
+      phoneNumber: newClient.phoneNumber
+    } as ClientCreatePayload));
   }
 
   openDeleteDialog(row: Client): void {
@@ -83,8 +70,7 @@ export class ClientSearchComponent implements OnInit {
   }
 
   deleteClient(deletedClient: Client): void {
-    this.dataSource.data = this.dataSource.data.filter(row => row.id !== deletedClient.id);
-    console.log('Deleted Client!');
+    this.store.dispatch(markClientDeleted({ id: deletedClient.id }));
   }
 
   openEditDialog(row: Client): void {
@@ -97,10 +83,31 @@ export class ClientSearchComponent implements OnInit {
   }
 
   editClient(editedClient: Client): void {
-    const updatedDatedSource = this.dataSource.data;
-    const editedClientIndex = updatedDatedSource.findIndex(client => client.id === editedClient.id);
-    updatedDatedSource[editedClientIndex] = editedClient;
-    this.dataSource.data = updatedDatedSource;
-    console.log('Edited Client!');
+    const editedClientOldValues = this.dataSource.data.find(client => client.id === editedClient.id);
+    this.store.dispatch(updateClient({
+      payload: {
+        id: editedClient.id,
+        firstName: editedClient.firstName,
+        lastName: editedClient.lastName,
+        address: editedClient.address,
+        phoneNumber: editedClient.phoneNumber,
+        email: editedClient.email,
+        dateOfBirth: editedClient.dateOfBirth,
+        brandPreference: editedClient.brandPreference,
+        colorPreference: editedClient.colorPreference,
+        notes: editedClient.notes,
+        oldValues: {
+          firstName: editedClientOldValues.firstName,
+          lastName: editedClientOldValues.lastName,
+          address: editedClientOldValues.address,
+          phoneNumber: editedClientOldValues.phoneNumber,
+          email: editedClientOldValues.email,
+          dateOfBirth: editedClientOldValues.dateOfBirth,
+          brandPreference: editedClientOldValues.brandPreference,
+          colorPreference: editedClientOldValues.colorPreference,
+          notes: editedClientOldValues.notes,
+        }
+      }
+    }));
   }
 }

@@ -9,10 +9,16 @@ import { AddressBookModule } from './modules/address-book/address-book.module';
 import { BookingModule } from './modules/booking/booking.module';
 import { AngularMaterialModule } from './shared/modules/angular-material/angular-material.module';
 import { SidenavComponent } from './modules/navigation/sidenav/sidenav.component';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from './state/reducers';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { EmployeesEffects } from './state/effects/employees.effects';
+import * as fromNailServices from './state/reducers/nail-services.reducer';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -30,6 +36,9 @@ import { environment } from '../environments/environment';
     AngularMaterialModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    StoreModule.forRoot(reducers),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    EffectsModule.forRoot([EmployeesEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent]

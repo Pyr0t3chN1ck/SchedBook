@@ -1,0 +1,24 @@
+<div class="employee-config-wrapper">
+  <div class="lhs-wrapper">
+    <button mat-raised-button color="accent" type="button" (click)="openAddEmployeeForm()">
+      <mat-icon>add</mat-icon>
+      Add Employee
+    </button>
+    <div class="employee-config-list">
+      <mat-selection-list #employeeListEl [multiple]="false" (selectionChange)="selectEmployee()">
+        <mat-list-option *ngFor="let employee of (employees$ | async);" [value]="employee.id">
+          {{employee.firstName}} {{employee.lastName}}
+        </mat-list-option>
+      </mat-selection-list>
+    </div>
+  </div>
+  <mat-divider [vertical]="true"></mat-divider>
+  <div class="employee-config-main">
+    <app-employee-form *ngIf="selectedEmployee !== null" [currentEmployee]="selectedEmployee"
+      (saveEmployee)="saveEmployeeEdit($event)" (deleteEmployee)="deleteEmployee($event)">
+    </app-employee-form>
+    <app-employee-form *ngIf="showAddEmployeeForm && selectedEmployee === null" [isAddEmployeeForm]="true"
+      (saveEmployee)="addEmployee($event)">
+    </app-employee-form>
+  </div>
+</div>

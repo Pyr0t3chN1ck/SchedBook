@@ -10,7 +10,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angul
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [BookingComponent, AppointmentFormComponent,],
+  declarations: [BookingComponent, AppointmentFormComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

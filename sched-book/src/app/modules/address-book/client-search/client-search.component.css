@@ -17,3 +17,20 @@
     text-align: center;
     justify-content: center;
 }
+
+.client-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.selected-row {
+  background: #efefef;
+}
+
+.client-row:not(.selected-row):hover {
+  background: whitesmoke;
+}
+
+.client-row:not(.selected-row):active {
+  background: #efefef;
+}

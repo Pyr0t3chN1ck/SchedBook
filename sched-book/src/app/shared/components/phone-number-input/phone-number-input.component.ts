@@ -40,6 +40,7 @@ export class PhoneNumberInputComponent implements ControlValueAccessor, MatFormF
   onChange = (_: any) => { };
   onTouched = () => { };
 
+  // tslint:disable-next-line: typedef
   get empty() {
     const {
       value: { area, exchange, subscriber }
@@ -48,6 +49,7 @@ export class PhoneNumberInputComponent implements ControlValueAccessor, MatFormF
     return !area && !exchange && !subscriber;
   }
 
+  // tslint:disable-next-line: typedef
   get shouldLabelFloat() {
     return this.focused || !this.empty;
   }
@@ -92,7 +94,7 @@ export class PhoneNumberInputComponent implements ControlValueAccessor, MatFormF
       && this.parts.controls.area.value === ''
       && this.parts.controls.exchange.value === ''
       && this.parts.controls.subscriber.value === '') {
-        return new PhoneNumber('', '' , '');
+      return new PhoneNumber('', '', '');
     }
     return null;
   }
@@ -148,15 +150,18 @@ export class PhoneNumberInputComponent implements ControlValueAccessor, MatFormF
     }
   }
 
+  // tslint:disable-next-line: typedef
   ngOnDestroy() {
     this.stateChanges.complete();
     this._focusMonitor.stopMonitoring(this._elementRef);
   }
 
+  // tslint:disable-next-line: typedef
   setDescribedByIds(ids: string[]) {
     this.describedBy = ids.join(' ');
   }
 
+  // tslint:disable-next-line: typedef
   onContainerClick(event: MouseEvent) {
     if (this.parts.controls.subscriber.valid) {
       this._focusMonitor.focusVia(this.subscriberInput, 'program');

@@ -9,6 +9,7 @@ import { SharedDirectivesModule } from '../../shared/directives/shared-directive
 import { AngularMaterialModule } from 'src/app/shared/modules/angular-material/angular-material.module';
 import { DeleteClientDialogComponent } from './delete-client-dialog/delete-client-dialog.component';
 import { SharedComponentsModule } from 'src/app/shared/components/shared-components.module';
+import { ClientCardComponent } from './client-card/client-card.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { SharedComponentsModule } from 'src/app/shared/components/shared-compone
     AddressBookComponent,
     ClientFormComponent,
     DeleteClientDialogComponent,
+    ClientCardComponent,
   ],
   imports: [
     CommonModule,
