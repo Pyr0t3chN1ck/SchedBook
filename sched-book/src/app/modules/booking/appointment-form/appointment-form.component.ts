@@ -43,14 +43,6 @@ export class AppointmentFormComponent implements OnInit, OnDestroy {
     this.appointmentForm.controls.newClientName.enable();
     this.appointmentForm.controls.newClientPhoneNumber.enable();
 
-    // this.employeeService.getEmployees().subscribe(data => {
-    //   this.employees = data.map(employee => {
-    //     return {
-    //       id: employee.payload.doc.id,
-    //       ...employee.payload.doc.data() as any
-    //     } as Employee;
-    //   });
-    // });
     this.employees$ = this.store.pipe(select(selectAllCurrentEmployees));
     this.clients$ = this.store.pipe(select(selectAllCurrentClients));
     this.nailServices$ = this.store.pipe(select(selectAllCurrentNailServices));

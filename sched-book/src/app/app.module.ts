@@ -19,6 +19,7 @@ import * as fromNailServices from './state/reducers/nail-services.reducer';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { NailServicesEffects } from './state/effects/nail-services.effects';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     AngularFirestoreModule,
     StoreModule.forRoot(reducers),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([EmployeesEffects]),
+    EffectsModule.forRoot([EmployeesEffects, NailServicesEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent]
