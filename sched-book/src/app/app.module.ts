@@ -20,6 +20,7 @@ import * as fromNailServices from './state/reducers/nail-services.reducer';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { NailServicesEffects } from './state/effects/nail-services.effects';
+import { ClientsEffects } from './state/effects/clients.effects';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { NailServicesEffects } from './state/effects/nail-services.effects';
     AngularFirestoreModule,
     StoreModule.forRoot(reducers),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([EmployeesEffects, NailServicesEffects]),
+    EffectsModule.forRoot([EmployeesEffects, NailServicesEffects, ClientsEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent]
