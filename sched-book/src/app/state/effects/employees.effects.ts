@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { EmployeeService } from 'src/app/shared/services/employee.service';
 import * as employeeActions from '../actions/employees.actions';
 import { EmployeeEntity } from '../reducers/employees.reducer';
@@ -24,7 +24,44 @@ export class EmployeesEffects {
             } as EmployeeEntity;
           })
         })),
-        catchError(results => of(employeeActions.loadEmployeesFail({ message: 'There was an issue loading employees.' })))
+        catchError(err => of(employeeActions.loadEmployeesFail({ message: 'There was an issue loading employees.' })))
+      )
+      )
+    )
+  );
+
+  createEmployee$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(employeeActions.createEmployee),
+      map(action => action.payload),
+      switchMap((emp) => this.service.addEmployee(emp).pipe(
+        map(response => employeeActions.createEmployeeSuccess()),
+        catchError(err => of(employeeActions.createEmployeeFail({ message: 'There was an issue creating employee.', payload: emp }))
+        )
+      )
+      )
+    )
+  );
+
+  deleteEmployee$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(employeeActions.markEmployeeDeleted),
+      map(action => action.id),
+      switchMap((id) => this.service.markEmployeeDeleted(id).pipe(
+        map(() => employeeActions.markEmployeeDeletedSuccess({ id })),
+        catchError(err => of(employeeActions.markEmployeeDeletedFail({ message: 'There was an issue deleting employee.' })))
+      )
+      )
+    )
+  );
+
+  updateEmployee$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(employeeActions.updateEmployee),
+      map(action => action.payload),
+      switchMap(emp => this.service.updateEmployee({ id: emp.id, firstName: emp.firstName, lastName: emp.lastName }).pipe(
+        map(() => employeeActions.updateEmployeeSucceess({ payload: emp })),
+        catchError(err => of(employeeActions.updateEmployeeFail({ message: 'There was an issue updating employee.', payload: emp })))
       )
       )
     )
