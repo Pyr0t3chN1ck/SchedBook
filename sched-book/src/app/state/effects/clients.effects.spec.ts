@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { ClientsEffects } from './clients.effects';
 
 describe('ClientsEffects', () => {
+  // tslint:disable-next-line: prefer-const
   let actions$: Observable<any>;
   let effects: ClientsEffects;
 

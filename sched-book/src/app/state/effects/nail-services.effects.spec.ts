@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { NailServicesEffects } from './nail-services.effects';
 
 describe('NailServicesEffects', () => {
+  // tslint:disable-next-line: prefer-const
   let actions$: Observable<any>;
   let effects: NailServicesEffects;
 
