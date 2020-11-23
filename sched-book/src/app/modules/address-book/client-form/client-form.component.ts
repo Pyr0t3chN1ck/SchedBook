@@ -22,7 +22,9 @@ export class ClientFormComponent implements OnInit {
   });
   save = new EventEmitter<Client>();
 
-  constructor(private dialogRef: MatDialogRef<ClientFormComponent>, private formBuilder: FormBuilder,
+  constructor(
+    private dialogRef: MatDialogRef<ClientFormComponent>,
+    private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: Client) {
     dialogRef.disableClose = true;
   }
