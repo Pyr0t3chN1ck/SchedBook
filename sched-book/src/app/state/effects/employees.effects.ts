@@ -35,7 +35,7 @@ export class EmployeesEffects {
       ofType(employeeActions.createEmployee),
       map(action => action.payload),
       switchMap((emp) => this.service.addEmployee(emp).pipe(
-        map(response => employeeActions.createEmployeeSuccess()),
+        map(() => employeeActions.createEmployeeSuccess()),
         catchError(err => of(employeeActions.createEmployeeFail({ message: 'There was an issue creating employee.', payload: emp }))
         )
       )

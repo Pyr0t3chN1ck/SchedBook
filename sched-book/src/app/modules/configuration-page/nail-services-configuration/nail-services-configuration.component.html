@@ -14,7 +14,7 @@
   </div>
   <mat-divider [vertical]="true"></mat-divider>
   <div class="nail-service-config-main">
-    <app-nail-service-form *ngIf="selectedNailService !== null" [currentNailService]="selectedNailService"
+    <app-nail-service-form *ngIf="selectedNailService" [currentNailService]="selectedNailService"
       (saveNailService)="saveNailServiceEdit($event)" (deleteNailService)="deleteNailService($event)">
     </app-nail-service-form>
     <app-nail-service-form *ngIf="showAddServiceForm && selectedNailService === null" [isAddServiceForm]="true"
