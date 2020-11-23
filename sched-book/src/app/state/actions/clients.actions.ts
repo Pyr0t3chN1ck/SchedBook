@@ -29,8 +29,8 @@ export const createClient = createAction(
 );
 
 export const createClientSuccess = createAction(
-  '[clients] client added successfully',
-  props<{ payload: ClientEntity }>()
+  '[clients] client added successfully'
+  // props<{ payload: ClientEntity }>()
 );
 
 export const createClientFail = createAction(
