@@ -29,7 +29,8 @@ export const createNailService = createAction(
 );
 
 export const createNailServiceSuccess = createAction(
-  '[nail-services] nail service added successfully'
+  '[nail-services] nail service added successfully',
+  props<{ payload: NailServiceEntity }>()
 );
 
 export const createNailServiceFail = createAction(

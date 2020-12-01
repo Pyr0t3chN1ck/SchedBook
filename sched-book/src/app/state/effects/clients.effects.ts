@@ -14,17 +14,18 @@ export class ClientsEffects {
   loadClients$ = createEffect(() =>
     this.actions$.pipe(
       ofType(clientActions.loadClients),
-      switchMap(() => this.service.getClients().pipe(
-        map(results => clientActions.loadClientsSuccess({
-          payload: results.map(client => {
-            return {
-              id: client.payload.doc.id,
-              ...client.payload.doc.data() as any
-            } as ClientEntity;
-          })
-        })),
-        catchError(results => of(clientActions.loadClientsFail({ message: 'There was an issue loading clients' })))
-      )
+      switchMap(() => this.service.getClients()
+        .pipe(
+          map(results => clientActions.loadClientsSuccess({
+            payload: results.map(client => {
+              return {
+                id: client.payload.doc.id,
+                ...client.payload.doc.data() as any
+              } as ClientEntity;
+            })
+          })),
+          catchError(results => of(clientActions.loadClientsFail({ message: 'There was an issue loading clients' })))
+        )
       )
     )
   );
@@ -32,16 +33,21 @@ export class ClientsEffects {
   createClient$ = createEffect(() =>
     this.actions$.pipe(
       ofType(clientActions.createClient),
-      tap((x) => console.log(x.payload)),
       map(action => action.payload),
-      switchMap((client) => this.service.addClient(client).pipe(
-        map(() => clientActions.createClientSuccess()),
-        catchError(err => of(clientActions.createClientFail({
-          message: 'There was an issue creating client.',
-          payload: client
-        }))
+      switchMap((client) => this.service.addClient(client)
+        .pipe(
+          map((response) => clientActions.createClientSuccess({
+            payload: {
+              id: response.id,
+              ...client
+            } as ClientEntity
+          })),
+          catchError(err => of(clientActions.createClientFail({
+            message: 'There was an issue creating client.',
+            payload: client
+          }))
+          )
         )
-      )
       )
     )
   );
@@ -50,10 +56,11 @@ export class ClientsEffects {
     this.actions$.pipe(
       ofType(clientActions.markClientDeleted),
       map(action => action.id),
-      switchMap((id) => this.service.markClientDeleted(id).pipe(
-        map(() => clientActions.markClientDeletedSuccess({ id })),
-        catchError(err => of(clientActions.markClientDeletedFail({ message: 'There was an issue deleting client.' })))
-      )
+      switchMap((id) => this.service.markClientDeleted(id)
+        .pipe(
+          map(() => clientActions.markClientDeletedSuccess({ id })),
+          catchError(err => of(clientActions.markClientDeletedFail({ message: 'There was an issue deleting client.' })))
+        )
       )
     )
   );
@@ -73,13 +80,14 @@ export class ClientsEffects {
         brandPreference: client.brandPreference,
         colorPreference: client.colorPreference,
         notes: client.notes,
-      }).pipe(
-        map(() => clientActions.updateClientSuccess({ payload: client })),
-        catchError(err => of(clientActions.updateClientFail({
-          message: 'There was an issue updating client.',
-          payload: client
-        })))
-      )
+      })
+        .pipe(
+          map(() => clientActions.updateClientSuccess({ payload: client })),
+          catchError(err => of(clientActions.updateClientFail({
+            message: 'There was an issue updating client.',
+            payload: client
+          })))
+        )
       )
     )
   );

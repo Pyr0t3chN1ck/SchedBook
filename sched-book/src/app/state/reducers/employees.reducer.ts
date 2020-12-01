@@ -24,15 +24,15 @@ const initialState = adapter.getInitialState();
 const reducerFunction = createReducer(
   initialState,
   on(actions.loadEmployeesSucceess, (oldState, action) => adapter.setAll(action.payload, oldState)),
-  // on(actions.createEmployeeSuccess, (oldState, action) => adapter.addOne(action.payload, oldState)),
-  // on(actions.updateEmployeeSucceess, (oldState, action) => adapter.updateOne({
-  //   id: action.payload.id,
-  //   changes: {
-  //     firstName: action.payload.firstName,
-  //     lastName: action.payload.lastName
-  //   }
-  // }, oldState)),
-  // on(actions.markEmployeeDeletedSuccess, (oldState, action) => adapter.removeOne(action.id, oldState))
+  on(actions.createEmployeeSuccess, (oldState, action) => adapter.addOne(action.payload, oldState)),
+  on(actions.updateEmployeeSucceess, (oldState, action) => adapter.updateOne({
+    id: action.payload.id,
+    changes: {
+      firstName: action.payload.firstName,
+      lastName: action.payload.lastName
+    }
+  }, oldState)),
+  on(actions.markEmployeeDeletedSuccess, (oldState, action) => adapter.removeOne(action.id, oldState))
 );
 
 export function reducer(state: EmployeeState = initialState, action: Action): EmployeeState {

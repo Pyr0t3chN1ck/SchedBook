@@ -26,15 +26,15 @@ const initialState = adapter.getInitialState();
 const reducerFunction = createReducer(
   initialState,
   on(actions.loadNailServicesSucceess, (oldState, action) => adapter.setAll(action.payload, oldState)),
-  // on(actions.createNailServiceSuccess, (oldState, action) => adapter.addOne(action.payload, oldState)),
-  // on(actions.updateNailServiceSucceess, (oldState, action) => adapter.updateOne({
-  //   id: action.payload.id,
-  //   changes: {
-  //     name: action.payload.name,
-  //     price: action.payload.price
-  //   }
-  // }, oldState)),
-  // on(actions.markNailServiceDeletedSuccess, (oldState, action) => adapter.removeOne(action.id, oldState))
+  on(actions.createNailServiceSuccess, (oldState, action) => adapter.addOne(action.payload, oldState)),
+  on(actions.updateNailServiceSucceess, (oldState, action) => adapter.updateOne({
+    id: action.payload.id,
+    changes: {
+      name: action.payload.name,
+      price: action.payload.price
+    }
+  }, oldState)),
+  on(actions.markNailServiceDeletedSuccess, (oldState, action) => adapter.removeOne(action.id, oldState))
 );
 
 export function reducer(state: NailServiceState = initialState, action: Action): NailServiceState {

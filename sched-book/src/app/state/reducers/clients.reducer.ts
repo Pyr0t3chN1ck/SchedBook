@@ -57,22 +57,22 @@ const initialState = adapter.getInitialState();
 const reducerFunction = createReducer(
   initialState,
   on(actions.loadClientsSuccess, (oldState, action) => adapter.setAll(action.payload, oldState)),
-  // on(actions.createClientSuccess, (oldState, action) => adapter.addOne(action.payload, oldState)),
-  // on(actions.updateClientSuccess, (oldState, action) => adapter.updateOne({
-  //   id: action.payload.id,
-  //   changes: {
-  //     firstName: action.payload.firstName,
-  //     lastName: action.payload.lastName,
-  //     address: action.payload.address,
-  //     phoneNumber: action.payload.phoneNumber,
-  //     email: action.payload.email,
-  //     dateOfBirth: action.payload.dateOfBirth,
-  //     brandPreference: action.payload.brandPreference,
-  //     colorPreference: action.payload.colorPreference,
-  //     notes: action.payload.notes
-  //   }
-  // }, oldState)),
-  // on(actions.markClientDeletedSuccess, (oldState, action) => adapter.removeOne(action.id, oldState))
+  on(actions.createClientSuccess, (oldState, action) => adapter.addOne(action.payload, oldState)),
+  on(actions.updateClientSuccess, (oldState, action) => adapter.updateOne({
+    id: action.payload.id,
+    changes: {
+      firstName: action.payload.firstName,
+      lastName: action.payload.lastName,
+      address: action.payload.address,
+      phoneNumber: action.payload.phoneNumber,
+      email: action.payload.email,
+      dateOfBirth: action.payload.dateOfBirth,
+      brandPreference: action.payload.brandPreference,
+      colorPreference: action.payload.colorPreference,
+      notes: action.payload.notes
+    }
+  }, oldState)),
+  on(actions.markClientDeletedSuccess, (oldState, action) => adapter.removeOne(action.id, oldState))
 );
 
 export function reducer(state: ClientState = initialState, action: Action): ClientState {

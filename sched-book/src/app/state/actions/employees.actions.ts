@@ -29,7 +29,8 @@ export const createEmployee = createAction(
 );
 
 export const createEmployeeSuccess = createAction(
-  '[employees] employee added successfully'
+  '[employees] employee added successfully',
+  props<{ payload: EmployeeEntity }>()
 );
 
 export const createEmployeeFail = createAction(

@@ -14,17 +14,18 @@ export class NailServicesEffects {
   loadNailServices$ = createEffect(() =>
     this.actions$.pipe(
       ofType(nailServicesActions.loadNailServices),
-      switchMap(() => this.service.getNailServices().pipe(
-        map(results => nailServicesActions.loadNailServicesSucceess({
-          payload: results.map(ns => {
-            return {
-              id: ns.payload.doc.id,
-              ...ns.payload.doc.data() as any
-            } as NailServiceEntity;
-          })
-        })),
-        catchError(err => of(nailServicesActions.loadNailServicesFail({ message: 'There was an issue loading nail services' })))
-      )
+      switchMap(() => this.service.getNailServices()
+        .pipe(
+          map(results => nailServicesActions.loadNailServicesSucceess({
+            payload: results.map(ns => {
+              return {
+                id: ns.payload.doc.id,
+                ...ns.payload.doc.data() as any
+              } as NailServiceEntity;
+            })
+          })),
+          catchError(err => of(nailServicesActions.loadNailServicesFail({ message: 'There was an issue loading nail services' })))
+        )
       )
     )
   );
@@ -33,14 +34,20 @@ export class NailServicesEffects {
     this.actions$.pipe(
       ofType(nailServicesActions.createNailService),
       map(action => action.payload),
-      switchMap((ns) => this.service.addNailService(ns).pipe(
-        map(() => nailServicesActions.createNailServiceSuccess()),
-        catchError(err => of(nailServicesActions.createNailServiceFail({
-          message: 'There was an issue creating nail service.',
-          payload: ns
-        }))
+      switchMap((ns) => this.service.addNailService(ns)
+        .pipe(
+          map((response) => nailServicesActions.createNailServiceSuccess({
+            payload: {
+              id: response.id,
+              ...ns
+            } as NailServiceEntity
+          })),
+          catchError(err => of(nailServicesActions.createNailServiceFail({
+            message: 'There was an issue creating nail service.',
+            payload: ns
+          }))
+          )
         )
-      )
       )
     )
   );
@@ -49,10 +56,11 @@ export class NailServicesEffects {
     this.actions$.pipe(
       ofType(nailServicesActions.markNailServiceDeleted),
       map(action => action.id),
-      switchMap((id) => this.service.markNailServiceDeleted(id).pipe(
-        map(() => nailServicesActions.markNailServiceDeletedSuccess({ id })),
-        catchError(err => of(nailServicesActions.markNailServiceDeletedFail({ message: 'There was an issue deleting nail service.' })))
-      )
+      switchMap((id) => this.service.markNailServiceDeleted(id)
+        .pipe(
+          map(() => nailServicesActions.markNailServiceDeletedSuccess({ id })),
+          catchError(err => of(nailServicesActions.markNailServiceDeletedFail({ message: 'There was an issue deleting nail service.' })))
+        )
       )
     )
   );
@@ -61,13 +69,14 @@ export class NailServicesEffects {
     this.actions$.pipe(
       ofType(nailServicesActions.updateNailService),
       map(action => action.payload),
-      switchMap(ns => this.service.updateNailService({ id: ns.id, name: ns.name, price: ns.price }).pipe(
-        map(() => nailServicesActions.updateNailServiceSucceess({ payload: ns })),
-        catchError(err => of(nailServicesActions.updateNailServiceFail({
-          message: 'There was an issue updating nail service.',
-          payload: ns
-        })))
-      )
+      switchMap(ns => this.service.updateNailService({ id: ns.id, name: ns.name, price: ns.price })
+        .pipe(
+          map(() => nailServicesActions.updateNailServiceSucceess({ payload: ns })),
+          catchError(err => of(nailServicesActions.updateNailServiceFail({
+            message: 'There was an issue updating nail service.',
+            payload: ns
+          })))
+        )
       )
     )
   );
