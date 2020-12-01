@@ -39,7 +39,6 @@ export const createClientFail = createAction(
 );
 
 // Update client actions
-
 export const updateClient = createAction(
   '[clients] updating client data',
   props<{

@@ -70,6 +70,7 @@ export class ClientSearchComponent implements OnInit {
   }
 
   deleteClient(deletedClient: Client): void {
+    this.selectedClient = null;
     this.store.dispatch(markClientDeleted({ id: deletedClient.id }));
   }
 

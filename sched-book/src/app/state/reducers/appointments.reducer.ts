@@ -11,7 +11,7 @@ export interface AppointmentEntity {
   clientName: string;
   clientPhoneNumber: string;
   nailServices: string[];
-  assignedEmployee: string;
+  assignedEmployees: string[];
   notes: string;
 }
 
@@ -41,7 +41,7 @@ const reducerFunction = createReducer(
       clientName: action.payload.clientName,
       clientPhoneNumber: action.payload.clientPhoneNumber,
       nailServices: action.payload.nailServices,
-      assignedEmployee: action.payload.assignedEmployee,
+      assignedEmployees: action.payload.assignedEmployees,
       notes: action.payload.notes,
     }
   }, oldState)),

@@ -13,13 +13,13 @@ export interface EmployeeState extends EntityState<EmployeeEntity> { }
 
 export const adapter = createEntityAdapter<EmployeeEntity>();
 
-// const initialState = adapter.getInitialState();
-const initialState: EmployeeState = {
-  ids: ['1'],
-  entities: {
-    1: { id: '1', firstName: 'Tip', lastName: 'Letdara', isDeleted: false }
-  }
-};
+const initialState = adapter.getInitialState();
+// const initialState: EmployeeState = {
+//   ids: ['1'],
+//   entities: {
+//     1: { id: '1', firstName: 'Tip', lastName: 'Letdara', isDeleted: false }
+//   }
+// };
 
 const reducerFunction = createReducer(
   initialState,

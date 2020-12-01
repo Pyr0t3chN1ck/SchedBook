@@ -15,25 +15,28 @@ export class ClientFormComponent implements OnInit {
     address: new FormControl(''),
     phoneNumber: new FormControl(new PhoneNumber('', '', '')),
     email: new FormControl('', [Validators.email]),
-    dateOfBirth: new FormControl(),
-    preferredBrands: new FormControl(''),
-    preferredColors: new FormControl(''),
+    dateOfBirth: new FormControl(''),
+    brandPreference: new FormControl(''),
+    colorPreference: new FormControl(''),
+    notes: new FormControl(''),
   });
   save = new EventEmitter<Client>();
 
-  constructor(private dialogRef: MatDialogRef<ClientFormComponent>, private formBuilder: FormBuilder,
-              @Inject(MAT_DIALOG_DATA) public data: Client) {
+  constructor(
+    private dialogRef: MatDialogRef<ClientFormComponent>,
+    private formBuilder: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: Client) {
     dialogRef.disableClose = true;
   }
 
   ngOnInit(): void {
     if (this.data) {
       const selectedClient = this.data;
-      const formPhoneNumber = new PhoneNumber(
-        this.data.phoneNumber.substr(0, 3),
-        this.data.phoneNumber.substr(3, 3),
-        this.data.phoneNumber.substr(6, 4)
-      );
+      const formPhoneNumber = selectedClient.phoneNumber && selectedClient.phoneNumber.length === 10 ? new PhoneNumber(
+        selectedClient.phoneNumber.substr(0, 3),
+        selectedClient.phoneNumber.substr(3, 3),
+        selectedClient.phoneNumber.substr(6, 4)
+      ) : '';
       this.clientForm.patchValue({
         firstName: selectedClient.firstName,
         lastName: selectedClient.lastName,
@@ -41,8 +44,8 @@ export class ClientFormComponent implements OnInit {
         phoneNumber: formPhoneNumber,
         email: selectedClient.email,
         dateOfBirth: selectedClient.dateOfBirth,
-        preferredBrands: selectedClient.brandPreference,
-        preferredColors: selectedClient.colorPreference,
+        brandPreference: selectedClient.brandPreference,
+        colorPreference: selectedClient.colorPreference,
       });
     }
   }

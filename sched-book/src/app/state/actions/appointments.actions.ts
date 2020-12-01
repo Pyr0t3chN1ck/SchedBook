@@ -50,7 +50,7 @@ export const updateAppointment = createAction(
       clientName: string;
       clientPhoneNumber: string;
       nailServices: string[];
-      assignedEmployee: string;
+      assignedEmployees: string[];
       notes: string;
       oldValues: {
         apptDate: Date;
@@ -60,7 +60,7 @@ export const updateAppointment = createAction(
         clientName: string;
         clientPhoneNumber: string;
         nailServices: string[];
-        assignedEmployee: string;
+        assignedEmployees: string[];
         notes: string;
       }
     }
@@ -79,7 +79,7 @@ export const updateAppointmentSucceess = createAction(
       clientName: string;
       clientPhoneNumber: string;
       nailServices: string[];
-      assignedEmployee: string;
+      assignedEmployees: string[];
       notes: string;
       oldValues: {
         apptDate: Date;
@@ -89,7 +89,7 @@ export const updateAppointmentSucceess = createAction(
         clientName: string;
         clientPhoneNumber: string;
         nailServices: string[];
-        assignedEmployee: string;
+        assignedEmployees: string[];
         notes: string;
       }
     }
@@ -109,7 +109,7 @@ export const updateAppointmentFail = createAction(
       clientName: string;
       clientPhoneNumber: string;
       nailServices: string[];
-      assignedEmployee: string;
+      assignedEmployees: string[];
       notes: string;
       oldValues: {
         apptDate: Date;
@@ -119,7 +119,7 @@ export const updateAppointmentFail = createAction(
         clientName: string;
         clientPhoneNumber: string;
         nailServices: string[];
-        assignedEmployee: string;
+        assignedEmployees: string[];
         notes: string;
       }
     }

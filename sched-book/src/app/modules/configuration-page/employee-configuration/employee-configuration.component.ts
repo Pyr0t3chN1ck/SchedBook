@@ -27,7 +27,7 @@ export class EmployeeConfigurationComponent implements OnInit, OnDestroy {
   selectEmployee(): void {
     this.subscriptions.add(
       this.employees$.subscribe(employees => {
-        this.selectedEmployee = employees.find(emp => emp.id === this.employeeListEl.selectedOptions.selected[0].value);
+        this.selectedEmployee = employees.find(emp => emp.id === this.employeeListEl.selectedOptions.selected[0]?.value);
       })
     );
   }

@@ -17,6 +17,11 @@ import { EffectsModule } from '@ngrx/effects';
 import { EmployeesEffects } from './state/effects/employees.effects';
 import * as fromNailServices from './state/reducers/nail-services.reducer';
 
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { NailServicesEffects } from './state/effects/nail-services.effects';
+import { ClientsEffects } from './state/effects/clients.effects';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,9 +36,11 @@ import * as fromNailServices from './state/reducers/nail-services.reducer';
     AddressBookModule,
     BookingModule,
     AngularMaterialModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
     StoreModule.forRoot(reducers),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([EmployeesEffects]),
+    EffectsModule.forRoot([EmployeesEffects, NailServicesEffects, ClientsEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -60,7 +60,7 @@
         <mat-label>
           Nail Tech
         </mat-label>
-        <mat-select formControlName="assignedEmployee">
+        <mat-select multiple formControlName="assignedEmployees">
           <mat-option *ngFor="let employee of (employees$ | async)" [value]="employee.id">
             {{ employee.firstName + ' ' + employee.lastName }}</mat-option>
         </mat-select>

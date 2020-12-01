@@ -27,7 +27,7 @@ export class NailServicesConfigurationComponent implements OnInit, OnDestroy {
   selectNailService(): void {
     this.subscriptions.add(
       this.nailServices$.subscribe(services => {
-        this.selectedNailService = services.find(ns => ns.id === this.nailServiceListEl.selectedOptions.selected[0].value);
+        this.selectedNailService = services.find(ns => ns.id === this.nailServiceListEl.selectedOptions.selected[0]?.value);
       })
     );
   }

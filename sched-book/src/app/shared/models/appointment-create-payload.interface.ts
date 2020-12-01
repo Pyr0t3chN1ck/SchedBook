@@ -6,6 +6,6 @@ export interface AppointmentCreatePayload {
   clientName: string;
   clientPhoneNumber: string;
   nailServices: string[];
-  assignedEmployee: string;
+  assignedEmployees: string[];
   notes: string;
 }

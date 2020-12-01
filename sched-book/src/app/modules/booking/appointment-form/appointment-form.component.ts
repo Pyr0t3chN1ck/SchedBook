@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, ValidatorFn, Validators } from '@angular/forms';
 import { MatRadioChange } from '@angular/material/radio';
+import { Client, NailService, PhoneNumber, Employee, AppointmentCreatePayload } from 'src/app/shared/models';
+import { EmployeeService } from 'src/app/shared/services/employee.service';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { Client, NailService, PhoneNumber, Employee, AppointmentCreatePayload } from 'src/app/shared/models';
 import { createAppointment } from 'src/app/state/actions/appointments.actions';
 import { AppState, selectAllCurrentClients, selectAllCurrentEmployees, selectAllCurrentNailServices } from 'src/app/state/reducers';
 
@@ -30,17 +31,18 @@ export class AppointmentFormComponent implements OnInit, OnDestroy {
     existingClient: new FormControl('', [this.requiredIfValidator(() =>
       this.appointmentForm.controls.clientType.valueChanges.subscribe(value => value === 'existing' ? true : false))]),
     nailServices: new FormControl([]),
-    assignedEmployee: new FormControl('', [Validators.required]),
+    assignedEmployees: new FormControl('', [Validators.required]),
     notes: new FormControl('')
   });
   minEndTime = this.roundMinutes(new Date());
 
-  constructor(private formBuilder: FormBuilder, private store: Store<AppState>) { }
+  constructor(private formBuilder: FormBuilder, private store: Store<AppState>, private employeeService: EmployeeService) { }
 
   ngOnInit(): void {
     this.appointmentForm.controls.existingClient.disable();
     this.appointmentForm.controls.newClientName.enable();
     this.appointmentForm.controls.newClientPhoneNumber.enable();
+
     this.employees$ = this.store.pipe(select(selectAllCurrentEmployees));
     this.clients$ = this.store.pipe(select(selectAllCurrentClients));
     this.nailServices$ = this.store.pipe(select(selectAllCurrentNailServices));
@@ -84,7 +86,7 @@ export class AppointmentFormComponent implements OnInit, OnDestroy {
     let clientId = '-1';
     let clientName = '';
     let clientPhoneNumber = '';
-    let selectedEmployee: Employee;
+    let selectedEmployees: Employee[];
     let selectedNailServices: NailService[];
     const apptDate = formControls.apptDate.value as Date;
     const startTime = formControls.startTime.value as Date;
@@ -116,7 +118,8 @@ export class AppointmentFormComponent implements OnInit, OnDestroy {
 
     this.subscriptions.add(
       this.employees$.subscribe(employees => {
-        selectedEmployee = employees.find(emp => emp.id === formControls.assignedEmployee.value);
+        // selectedEmployees = employees.find(emp => emp.id === formControls.assignedEmployee.value);
+        selectedEmployees = formControls.assignedEmployees.value.map(id => employees.find(emp => emp.id === id));
       })
     );
 
@@ -134,7 +137,7 @@ export class AppointmentFormComponent implements OnInit, OnDestroy {
       clientName,
       clientPhoneNumber,
       nailServices: selectedNailServices.map(ns => ns.id),
-      assignedEmployee: selectedEmployee.id,
+      assignedEmployees: selectedEmployees.map(emp => emp.id),
       notes: formControls.notes.value
     } as AppointmentCreatePayload;
     this.store.dispatch(createAppointment(newAppt));

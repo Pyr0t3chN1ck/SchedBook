@@ -13,15 +13,15 @@ export interface NailServiceState extends EntityState<NailServiceEntity> { }
 
 export const adapter = createEntityAdapter<NailServiceEntity>();
 
-// const initialState = adapter.getInitialState();
-const initialState: NailServiceState = {
-  ids: ['1', '2', '3'],
-  entities: {
-    1: { id: '1', name: 'Manicure', price: 20.00, isDeleted: false },
-    2: { id: '2', name: 'Pedicure', price: 27.00, isDeleted: false },
-    3: { id: '3', name: 'Acrylics', price: 35.00, isDeleted: false },
-  }
-};
+const initialState = adapter.getInitialState();
+// const initialState: NailServiceState = {
+//   ids: ['1', '2', '3'],
+//   entities: {
+//     1: { id: '1', name: 'Manicure', price: 20.00, isDeleted: false },
+//     2: { id: '2', name: 'Pedicure', price: 27.00, isDeleted: false },
+//     3: { id: '3', name: 'Acrylics', price: 35.00, isDeleted: false },
+//   }
+// };
 
 const reducerFunction = createReducer(
   initialState,

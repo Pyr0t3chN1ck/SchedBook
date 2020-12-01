@@ -14,7 +14,7 @@
   </div>
   <mat-divider [vertical]="true"></mat-divider>
   <div class="employee-config-main">
-    <app-employee-form *ngIf="selectedEmployee !== null" [currentEmployee]="selectedEmployee"
+    <app-employee-form *ngIf="selectedEmployee" [currentEmployee]="selectedEmployee"
       (saveEmployee)="saveEmployeeEdit($event)" (deleteEmployee)="deleteEmployee($event)">
     </app-employee-form>
     <app-employee-form *ngIf="showAddEmployeeForm && selectedEmployee === null" [isAddEmployeeForm]="true"
