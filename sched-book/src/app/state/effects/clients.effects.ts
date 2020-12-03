@@ -20,7 +20,8 @@ export class ClientsEffects {
             payload: results.map(client => {
               return {
                 id: client.payload.doc.id,
-                ...client.payload.doc.data() as any
+                ...client.payload.doc.data() as any,
+                dateOfBirth: new Date(client.payload.doc.data().dateOfBirth)
               } as ClientEntity;
             })
           })),
@@ -39,6 +40,7 @@ export class ClientsEffects {
           map((response) => clientActions.createClientSuccess({
             payload: {
               id: response.id,
+              dateOfBirth: client.dateOfBirth ? client.dateOfBirth.toISOString() : '',
               ...client
             } as ClientEntity
           })),
@@ -76,7 +78,7 @@ export class ClientsEffects {
         address: client.address,
         phoneNumber: client.phoneNumber,
         email: client.email,
-        dateOfBirth: client.dateOfBirth,
+        dateOfBirth: client.dateOfBirth ? client.dateOfBirth.toISOString() : '',
         brandPreference: client.brandPreference,
         colorPreference: client.colorPreference,
         notes: client.notes,
