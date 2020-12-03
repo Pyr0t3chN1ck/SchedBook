@@ -46,6 +46,7 @@ export class ClientFormComponent implements OnInit {
         dateOfBirth: selectedClient.dateOfBirth,
         brandPreference: selectedClient.brandPreference,
         colorPreference: selectedClient.colorPreference,
+        notes: selectedClient.notes
       });
     }
   }
