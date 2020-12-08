@@ -19,7 +19,7 @@
         </div>
         <div>
           <mat-label class="mat-h3 detail-subheading">Birthday</mat-label>
-          <div>{{ displayedClient.dateOfBirth }}</div>
+          <div>{{ (displayedClient.dateOfBirth | date) }}</div>
         </div>
         <div>
           <mat-label class="mat-h3 detail-subheading">Preferred Brands</mat-label>

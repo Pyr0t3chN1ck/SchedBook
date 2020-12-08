@@ -46,8 +46,7 @@ export class ClientFormComponent implements OnInit {
         brandPreference: selectedClient.brandPreference,
         colorPreference: selectedClient.colorPreference,
         notes: selectedClient.notes,
-        dateOfBirth: selectedClient.dateOfBirth instanceof Date && !isNaN(selectedClient.dateOfBirth.valueOf()) ?
-          selectedClient.dateOfBirth : ''
+        dateOfBirth: selectedClient.dateOfBirth
       });
     }
   }
