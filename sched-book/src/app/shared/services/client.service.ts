@@ -30,7 +30,7 @@ export class ClientService {
     address: string,
     phoneNumber: string,
     email: string,
-    dateOfBirth: Date,
+    dateOfBirth: string,
     brandPreference: string,
     colorPreference: string,
     notes: string,
