@@ -43,10 +43,11 @@ export class ClientFormComponent implements OnInit {
         address: selectedClient.address,
         phoneNumber: formPhoneNumber,
         email: selectedClient.email,
-        dateOfBirth: selectedClient.dateOfBirth,
         brandPreference: selectedClient.brandPreference,
         colorPreference: selectedClient.colorPreference,
-        notes: selectedClient.notes
+        notes: selectedClient.notes,
+        dateOfBirth: selectedClient.dateOfBirth instanceof Date && !isNaN(selectedClient.dateOfBirth.valueOf()) ?
+          selectedClient.dateOfBirth : ''
       });
     }
   }
