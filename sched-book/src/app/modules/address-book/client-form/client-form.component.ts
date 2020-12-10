@@ -46,8 +46,7 @@ export class ClientFormComponent implements OnInit {
         brandPreference: selectedClient.brandPreference,
         colorPreference: selectedClient.colorPreference,
         notes: selectedClient.notes,
-        dateOfBirth: selectedClient.dateOfBirth instanceof Date && !isNaN(selectedClient.dateOfBirth.valueOf()) ?
-          selectedClient.dateOfBirth : ''
+        dateOfBirth: selectedClient.dateOfBirth
       });
     }
   }
@@ -60,7 +59,8 @@ export class ClientFormComponent implements OnInit {
     if (this.clientForm.valid) {
       const phoneNumberObject = this.clientForm.controls.phoneNumber.value as PhoneNumber;
       const clientFormObject = this.clientForm.value as Client;
-      clientFormObject.phoneNumber = phoneNumberObject.area + phoneNumberObject.exchange + phoneNumberObject.subscriber;
+      clientFormObject.phoneNumber = phoneNumberObject ?
+        phoneNumberObject.area + phoneNumberObject.exchange + phoneNumberObject.subscriber : '';
       clientFormObject.id = this.data?.id;
       this.save.emit(clientFormObject);
       this.dialogRef.close();

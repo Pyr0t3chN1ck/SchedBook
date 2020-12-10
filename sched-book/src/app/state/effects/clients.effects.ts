@@ -21,7 +21,8 @@ export class ClientsEffects {
               return {
                 id: client.payload.doc.id,
                 ...client.payload.doc.data() as any,
-                dateOfBirth: new Date(client.payload.doc.data().dateOfBirth)
+                dateOfBirth: isNaN(new Date(client.payload.doc.data().dateOfBirth).valueOf()) ?
+                  null : new Date(client.payload.doc.data().dateOfBirth)
               } as ClientEntity;
             })
           })),

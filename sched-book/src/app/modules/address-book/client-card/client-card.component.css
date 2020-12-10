@@ -2,3 +2,8 @@
   font-weight: bold;
   text-decoration: underline;
 }
+
+pre {
+  margin: 0;
+  font-family: inherit;
+}
