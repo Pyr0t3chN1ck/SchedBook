@@ -118,7 +118,6 @@ export class AppointmentFormComponent implements OnInit, OnDestroy {
 
     this.subscriptions.add(
       this.employees$.subscribe(employees => {
-        // selectedEmployees = employees.find(emp => emp.id === formControls.assignedEmployee.value);
         selectedEmployees = formControls.assignedEmployees.value.map(id => employees.find(emp => emp.id === id));
       })
     );
@@ -136,8 +135,8 @@ export class AppointmentFormComponent implements OnInit, OnDestroy {
       clientId,
       clientName,
       clientPhoneNumber,
-      nailServices: selectedNailServices.map(ns => ns.id),
-      assignedEmployees: selectedEmployees.map(emp => emp.id),
+      nailServices: selectedNailServices,
+      assignedEmployees: selectedEmployees,
       notes: formControls.notes.value
     } as AppointmentCreatePayload;
     this.store.dispatch(createAppointment(newAppt));

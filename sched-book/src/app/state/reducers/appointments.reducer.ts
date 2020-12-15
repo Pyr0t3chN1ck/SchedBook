@@ -1,5 +1,6 @@
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
 import { Action, createReducer, on } from '@ngrx/store';
+import { Employee, NailService } from 'src/app/shared/models';
 import * as actions from '../actions/appointments.actions';
 
 export interface AppointmentEntity {
@@ -10,8 +11,8 @@ export interface AppointmentEntity {
   clientId: string;
   clientName: string;
   clientPhoneNumber: string;
-  nailServices: string[];
-  assignedEmployees: string[];
+  nailServices: NailService[];
+  assignedEmployees: Employee[];
   notes: string;
 }
 
