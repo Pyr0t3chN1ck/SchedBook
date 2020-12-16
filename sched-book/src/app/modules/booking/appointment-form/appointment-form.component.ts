@@ -140,6 +140,16 @@ export class AppointmentFormComponent implements OnInit, OnDestroy {
       notes: formControls.notes.value
     } as AppointmentCreatePayload;
     this.store.dispatch(createAppointment(newAppt));
+    this.appointmentForm.reset();
+    this.appointmentForm.patchValue({
+      apptDate: new Date(),
+      startTime: this.roundMinutes(new Date()),
+      endTime: this.roundMinutes(new Date(new Date().setHours(new Date().getHours() + 1))),
+      clientType: 'new'
+    });
+    this.appointmentForm.controls.newClientName.enable();
+    this.appointmentForm.controls.newClientPhoneNumber.enable();
+    this.appointmentForm.controls.existingClient.disable();
   }
 
   ngOnDestroy(): void {

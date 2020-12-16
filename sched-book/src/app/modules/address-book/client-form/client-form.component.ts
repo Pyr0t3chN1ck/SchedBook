@@ -52,6 +52,7 @@ export class ClientFormComponent implements OnInit {
   }
 
   onCancel(): void {
+    this.clientForm.reset();
     this.dialogRef.close();
   }
 
@@ -63,6 +64,7 @@ export class ClientFormComponent implements OnInit {
         phoneNumberObject.area + phoneNumberObject.exchange + phoneNumberObject.subscriber : '';
       clientFormObject.id = this.data?.id;
       this.save.emit(clientFormObject);
+      this.clientForm.reset();
       this.dialogRef.close();
     }
   }

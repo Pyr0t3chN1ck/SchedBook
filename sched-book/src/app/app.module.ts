@@ -15,12 +15,12 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { EmployeesEffects } from './state/effects/employees.effects';
-import * as fromNailServices from './state/reducers/nail-services.reducer';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { NailServicesEffects } from './state/effects/nail-services.effects';
 import { ClientsEffects } from './state/effects/clients.effects';
+import { AppointmentsEffects } from './state/effects/appointments.effects';
 
 @NgModule({
   declarations: [
@@ -40,7 +40,7 @@ import { ClientsEffects } from './state/effects/clients.effects';
     AngularFirestoreModule,
     StoreModule.forRoot(reducers),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([EmployeesEffects, NailServicesEffects, ClientsEffects]),
+    EffectsModule.forRoot([EmployeesEffects, NailServicesEffects, ClientsEffects, AppointmentsEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent]
