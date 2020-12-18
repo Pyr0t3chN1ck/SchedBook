@@ -26,8 +26,7 @@ export class AppointmentFormComponent implements OnInit, OnDestroy {
     clientType: new FormControl('new'),
     newClientName: new FormControl('', [this.requiredIfValidator(() =>
       this.appointmentForm.controls.clientType.valueChanges.subscribe(value => value === 'new' ? true : false))]),
-    newClientPhoneNumber: new FormControl(new PhoneNumber('', '', ''), [this.requiredIfValidator(() =>
-      this.appointmentForm.controls.clientType.valueChanges.subscribe(value => value === 'new' ? true : false))]),
+    newClientPhoneNumber: new FormControl(new PhoneNumber('', '', '')),
     existingClient: new FormControl('', [this.requiredIfValidator(() =>
       this.appointmentForm.controls.clientType.valueChanges.subscribe(value => value === 'existing' ? true : false))]),
     nailServices: new FormControl([]),
@@ -103,7 +102,8 @@ export class AppointmentFormComponent implements OnInit, OnDestroy {
     if (formControls.clientType.value === 'new') {
       const phoneNumberObj = formControls.newClientPhoneNumber.value as PhoneNumber;
       clientName = formControls.newClientName.value;
-      clientPhoneNumber = phoneNumberObj.area + phoneNumberObj.exchange + phoneNumberObj.subscriber;
+      clientPhoneNumber = phoneNumberObj ?
+        phoneNumberObj.area + phoneNumberObj.exchange + phoneNumberObj.subscriber : '';
     }
     else if (formControls.clientType.value === 'existing') {
       let selectedClient: Client;

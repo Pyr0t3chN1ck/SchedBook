@@ -18,6 +18,7 @@ import { EmployeesEffects } from './state/effects/employees.effects';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+
 import { NailServicesEffects } from './state/effects/nail-services.effects';
 import { ClientsEffects } from './state/effects/clients.effects';
 import { AppointmentsEffects } from './state/effects/appointments.effects';
