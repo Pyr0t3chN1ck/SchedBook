@@ -11,6 +11,25 @@ export class AppointmentsEffects {
 
   constructor(private actions$: Actions, private service: AppointmentService) { }
 
+  loadAppointments$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(appointmentActions.loadAppointments),
+      switchMap(() => this.service.getAppointments()
+        .pipe(
+          map(results => appointmentActions.loadAppointmentsSucceess({
+            payload: results.map(appt => {
+              return {
+                id: appt.payload.doc.id,
+                ...appt.payload.doc.data() as any
+              } as AppointmentEntity;
+            })
+          })),
+          catchError(results => of(appointmentActions.loadApointmentsFail({ message: 'There was an issue loading appointments' })))
+        )
+      )
+    )
+  );
+
   createAppointment$ = createEffect(() =>
     this.actions$.pipe(
       ofType(appointmentActions.createAppointment),

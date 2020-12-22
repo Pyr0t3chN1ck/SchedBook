@@ -11,6 +11,10 @@ export class AppointmentService {
 
   constructor(private firestore: AngularFirestore) { }
 
+  getAppointments(): Observable<any> {
+    return this.appointmentColleciton.snapshotChanges();
+  }
+
   addAppointment(newAppointment: AppointmentEntity): Observable<DocumentReference> {
     return from(this.appointmentColleciton.add(newAppointment));
   }
