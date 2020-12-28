@@ -108,8 +108,8 @@ export const updateAppointmentFail = createAction(
       clientId: string;
       clientName: string;
       clientPhoneNumber: string;
-      nailServices: string[];
-      assignedEmployees: string[];
+      nailServices: NailService[];
+      assignedEmployees: Employee[];
       notes: string;
       oldValues: {
         apptDate: Date;
@@ -118,8 +118,8 @@ export const updateAppointmentFail = createAction(
         clientId: string;
         clientName: string;
         clientPhoneNumber: string;
-        nailServices: string[];
-        assignedEmployees: string[];
+        nailServices: NailService[];
+        assignedEmployees: Employee[];
         notes: string;
       }
     }

@@ -65,4 +65,30 @@ export class AppointmentsEffects {
     )
   );
 
+  updateAppointment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(appointmentActions.updateAppointment),
+      map(action => action.payload),
+      switchMap(appt => this.service.updateAppointment({
+        id: appt.id,
+        apptDate: appt.apptDate,
+        startTime: appt.startTime,
+        endTime: appt.endTime,
+        clientId: appt.clientId,
+        clientName: appt.clientName,
+        clientPhoneNumber: appt.clientPhoneNumber,
+        nailServices: appt.nailServices,
+        assignedEmployees: appt.assignedEmployees,
+        notes: appt.notes
+      })
+        .pipe(
+          map(() => appointmentActions.updateAppointmentSucceess({ payload: appt })),
+          catchError(err => of(appointmentActions.updateAppointmentFail({
+            message: 'There was an issue updating appointment.',
+            payload: appt
+          })))
+        )
+      )
+    )
+  );
 }
