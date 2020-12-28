@@ -18,4 +18,8 @@ export class AppointmentService {
   addAppointment(newAppointment: AppointmentEntity): Observable<DocumentReference> {
     return from(this.appointmentColleciton.add(newAppointment));
   }
+
+  deleteAppointment(id: string): Observable<void> {
+    return from(this.appointmentColleciton.doc(id).delete());
+  }
 }

@@ -52,4 +52,17 @@ export class AppointmentsEffects {
     )
   );
 
+  deleteAppointment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(appointmentActions.deleteAppointment),
+      map(action => action.id),
+      switchMap((id) => this.service.deleteAppointment(id)
+        .pipe(
+          map(() => appointmentActions.deleteAppointmentSuccess({ id })),
+          catchError(err => of(appointmentActions.deleteAppointmentFail({ message: 'There was an issue deleting appointment.' })))
+        )
+      )
+    )
+  );
+
 }
