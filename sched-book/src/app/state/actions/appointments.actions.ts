@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { AppointmentCreatePayload } from 'src/app/shared/models';
+import { AppointmentCreatePayload, Employee, NailService } from 'src/app/shared/models';
 import { AppointmentEntity } from '../reducers/appointments.reducer';
 
 // Loading appointment actions
@@ -49,8 +49,8 @@ export const updateAppointment = createAction(
       clientId: string;
       clientName: string;
       clientPhoneNumber: string;
-      nailServices: string[];
-      assignedEmployees: string[];
+      nailServices: NailService[];
+      assignedEmployees: Employee[];
       notes: string;
       oldValues: {
         apptDate: Date;
@@ -59,8 +59,8 @@ export const updateAppointment = createAction(
         clientId: string;
         clientName: string;
         clientPhoneNumber: string;
-        nailServices: string[];
-        assignedEmployees: string[];
+        nailServices: NailService[];
+        assignedEmployees: Employee[];
         notes: string;
       }
     }
@@ -78,8 +78,8 @@ export const updateAppointmentSucceess = createAction(
       clientId: string;
       clientName: string;
       clientPhoneNumber: string;
-      nailServices: string[];
-      assignedEmployees: string[];
+      nailServices: NailService[];
+      assignedEmployees: Employee[];
       notes: string;
       oldValues: {
         apptDate: Date;
@@ -88,8 +88,8 @@ export const updateAppointmentSucceess = createAction(
         clientId: string;
         clientName: string;
         clientPhoneNumber: string;
-        nailServices: string[];
-        assignedEmployees: string[];
+        nailServices: NailService[];
+        assignedEmployees: Employee[];
         notes: string;
       }
     }
@@ -108,8 +108,8 @@ export const updateAppointmentFail = createAction(
       clientId: string;
       clientName: string;
       clientPhoneNumber: string;
-      nailServices: string[];
-      assignedEmployees: string[];
+      nailServices: NailService[];
+      assignedEmployees: Employee[];
       notes: string;
       oldValues: {
         apptDate: Date;
@@ -118,8 +118,8 @@ export const updateAppointmentFail = createAction(
         clientId: string;
         clientName: string;
         clientPhoneNumber: string;
-        nailServices: string[];
-        assignedEmployees: string[];
+        nailServices: NailService[];
+        assignedEmployees: Employee[];
         notes: string;
       }
     }

@@ -26,8 +26,7 @@ export class AppointmentFormComponent implements OnInit, OnDestroy {
     clientType: new FormControl('new'),
     newClientName: new FormControl('', [this.requiredIfValidator(() =>
       this.appointmentForm.controls.clientType.valueChanges.subscribe(value => value === 'new' ? true : false))]),
-    newClientPhoneNumber: new FormControl(new PhoneNumber('', '', ''), [this.requiredIfValidator(() =>
-      this.appointmentForm.controls.clientType.valueChanges.subscribe(value => value === 'new' ? true : false))]),
+    newClientPhoneNumber: new FormControl(new PhoneNumber('', '', '')),
     existingClient: new FormControl('', [this.requiredIfValidator(() =>
       this.appointmentForm.controls.clientType.valueChanges.subscribe(value => value === 'existing' ? true : false))]),
     nailServices: new FormControl([]),
@@ -103,7 +102,8 @@ export class AppointmentFormComponent implements OnInit, OnDestroy {
     if (formControls.clientType.value === 'new') {
       const phoneNumberObj = formControls.newClientPhoneNumber.value as PhoneNumber;
       clientName = formControls.newClientName.value;
-      clientPhoneNumber = phoneNumberObj.area + phoneNumberObj.exchange + phoneNumberObj.subscriber;
+      clientPhoneNumber = phoneNumberObj ?
+        phoneNumberObj.area + phoneNumberObj.exchange + phoneNumberObj.subscriber : '';
     }
     else if (formControls.clientType.value === 'existing') {
       let selectedClient: Client;
@@ -118,7 +118,6 @@ export class AppointmentFormComponent implements OnInit, OnDestroy {
 
     this.subscriptions.add(
       this.employees$.subscribe(employees => {
-        // selectedEmployees = employees.find(emp => emp.id === formControls.assignedEmployee.value);
         selectedEmployees = formControls.assignedEmployees.value.map(id => employees.find(emp => emp.id === id));
       })
     );
@@ -136,11 +135,21 @@ export class AppointmentFormComponent implements OnInit, OnDestroy {
       clientId,
       clientName,
       clientPhoneNumber,
-      nailServices: selectedNailServices.map(ns => ns.id),
-      assignedEmployees: selectedEmployees.map(emp => emp.id),
+      nailServices: selectedNailServices,
+      assignedEmployees: selectedEmployees,
       notes: formControls.notes.value
     } as AppointmentCreatePayload;
     this.store.dispatch(createAppointment(newAppt));
+    this.appointmentForm.reset();
+    this.appointmentForm.patchValue({
+      apptDate: new Date(),
+      startTime: this.roundMinutes(new Date()),
+      endTime: this.roundMinutes(new Date(new Date().setHours(new Date().getHours() + 1))),
+      clientType: 'new'
+    });
+    this.appointmentForm.controls.newClientName.enable();
+    this.appointmentForm.controls.newClientPhoneNumber.enable();
+    this.appointmentForm.controls.existingClient.disable();
   }
 
   ngOnDestroy(): void {

@@ -1,3 +1,6 @@
+import { Employee } from './employee.interface';
+import { NailService } from './nail-service.interface';
+
 export interface AppointmentCreatePayload {
   apptDate: Date;
   startTime: Date;
@@ -5,7 +8,7 @@ export interface AppointmentCreatePayload {
   clientId: string;
   clientName: string;
   clientPhoneNumber: string;
-  nailServices: string[];
-  assignedEmployees: string[];
+  nailServices: NailService[];
+  assignedEmployees: Employee[];
   notes: string;
 }

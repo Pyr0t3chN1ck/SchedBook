@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { loadAppointments } from './state/actions/appointments.actions';
 import { loadClients } from './state/actions/clients.actions';
 import { loadEmployees } from './state/actions/employees.actions';
 import { loadNailServices } from './state/actions/nail-services.actions';
@@ -19,5 +20,6 @@ export class AppComponent implements OnInit {
     this.store.dispatch(loadEmployees());
     this.store.dispatch(loadNailServices());
     this.store.dispatch(loadClients());
+    this.store.dispatch(loadAppointments());
   }
 }

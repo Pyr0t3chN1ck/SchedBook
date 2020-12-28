@@ -1,3 +1,6 @@
+import { NailService } from '.';
+import { Employee } from './employee.interface';
+
 export interface Appointment {
   id: string;
   apptDate: Date;
@@ -6,7 +9,7 @@ export interface Appointment {
   clientId: string;
   clientName: string;
   clientPhoneNumber: string;
-  nailServices: string[];
-  assignedEmployees: string[];
+  nailServices: NailService[];
+  assignedEmployees: Employee[];
   notes: string;
 }
