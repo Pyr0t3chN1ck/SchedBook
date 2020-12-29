@@ -15,7 +15,19 @@ export class ClientService {
     return this.clientCollection.snapshotChanges();
   }
 
-  addClient(newClient: ClientEntity): Observable<DocumentReference> {
+  addClient(newClient: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    address: string;
+    phoneNumber: string;
+    email: string;
+    dateOfBirth: string;
+    brandPreference: string;
+    colorPreference: string;
+    notes: string;
+    isDeleted: boolean;
+  }): Observable<DocumentReference> {
     return from(this.clientCollection.add(newClient));
   }
 

@@ -36,14 +36,16 @@ export class ClientsEffects {
     this.actions$.pipe(
       ofType(clientActions.createClient),
       map(action => action.payload),
-      switchMap((client) => this.service.addClient(client)
+      switchMap((client) => this.service.addClient({
+        ...client,
+        dateOfBirth: client.dateOfBirth ? client.dateOfBirth.toISOString() : ''
+      })
         .pipe(
           map((response) => clientActions.createClientSuccess({
             payload: {
               id: response.id,
-              dateOfBirth: client.dateOfBirth ? client.dateOfBirth.toISOString() : '',
               ...client
-            } as ClientEntity
+            }
           })),
           catchError(err => of(clientActions.createClientFail({
             message: 'There was an issue creating client.',
