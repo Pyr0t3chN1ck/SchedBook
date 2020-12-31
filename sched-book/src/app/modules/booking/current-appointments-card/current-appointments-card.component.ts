@@ -16,7 +16,6 @@ export class CurrentAppointmentsCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.appointment$ = this.store.pipe(select(selectAllAppointments));
-    this.appointment$.subscribe(x => console.log(x));
   }
 
 }
