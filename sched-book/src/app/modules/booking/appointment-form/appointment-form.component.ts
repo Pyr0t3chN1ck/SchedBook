@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, ValidatorFn, Validators } from '@angular/forms';
 import { MatRadioChange } from '@angular/material/radio';
 import { Client, NailService, PhoneNumber, Employee, AppointmentCreatePayload } from 'src/app/shared/models';
-import { EmployeeService } from 'src/app/shared/services/employee.service';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { createAppointment } from 'src/app/state/actions/appointments.actions';
@@ -35,7 +34,7 @@ export class AppointmentFormComponent implements OnInit, OnDestroy {
   });
   minEndTime = this.roundMinutes(new Date());
 
-  constructor(private formBuilder: FormBuilder, private store: Store<AppState>, private employeeService: EmployeeService) { }
+  constructor(private formBuilder: FormBuilder, private store: Store<AppState>) { }
 
   ngOnInit(): void {
     this.appointmentForm.controls.existingClient.disable();

@@ -45,7 +45,7 @@ export class ClientsEffects {
             payload: {
               id: response.id,
               ...client
-            }
+            } as ClientEntity
           })),
           catchError(err => of(clientActions.createClientFail({
             message: 'There was an issue creating client.',

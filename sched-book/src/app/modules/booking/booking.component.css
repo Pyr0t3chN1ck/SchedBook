@@ -1,6 +1,7 @@
 .booking-page-container {
     display: flex;
     flex-flow: row wrap;
+    align-items: stretch;
 }
 .appointment-form-container {
     width: 45%;

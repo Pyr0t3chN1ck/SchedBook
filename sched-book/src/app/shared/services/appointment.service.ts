@@ -16,7 +16,18 @@ export class AppointmentService {
     return this.appointmentColleciton.snapshotChanges();
   }
 
-  addAppointment(newAppointment: AppointmentEntity): Observable<DocumentReference> {
+  addAppointment(newAppointment: {
+    id: string;
+    apptDate: string;
+    startTime: string;
+    endTime: string;
+    clientId: string;
+    clientName: string;
+    clientPhoneNumber: string;
+    nailServices: NailService[];
+    assignedEmployees: Employee[];
+    notes: string;
+  }): Observable<DocumentReference> {
     return from(this.appointmentColleciton.add(newAppointment));
   }
 
@@ -26,9 +37,9 @@ export class AppointmentService {
 
   updateAppointment(updatedAppointment: {
     id: string,
-    apptDate: Date,
-    startTime: Date,
-    endTime: Date,
+    apptDate: string,
+    startTime: string,
+    endTime: string,
     clientId: string,
     clientName: string,
     clientPhoneNumber: string,

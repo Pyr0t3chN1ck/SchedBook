@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { AppointmentService } from 'src/app/shared/services/appointment.service';
 import * as appointmentActions from '../actions/appointments.actions';
 import { AppointmentEntity } from '../reducers/appointments.reducer';
@@ -20,7 +20,13 @@ export class AppointmentsEffects {
             payload: results.map(appt => {
               return {
                 id: appt.payload.doc.id,
-                ...appt.payload.doc.data() as any
+                ...appt.payload.doc.data() as any,
+                apptDate: isNaN(new Date(appt.payload.doc.data().apptDate).valueOf()) ?
+                  null : new Date(appt.payload.doc.data().apptDate),
+                startTime: isNaN(new Date(appt.payload.doc.data().startTime).valueOf()) ?
+                  null : new Date(appt.payload.doc.data().startTime),
+                endTime: isNaN(new Date(appt.payload.doc.data().endTime).valueOf()) ?
+                  null : new Date(appt.payload.doc.data().endTime)
               } as AppointmentEntity;
             })
           })),
@@ -34,17 +40,22 @@ export class AppointmentsEffects {
     this.actions$.pipe(
       ofType(appointmentActions.createAppointment),
       map(action => action.payload),
-      switchMap((appointment) => this.service.addAppointment(appointment)
+      switchMap((appt) => this.service.addAppointment({
+        ...appt,
+        apptDate: appt.apptDate ? appt.apptDate.toISOString() : '',
+        startTime: appt.startTime ? appt.startTime.toISOString() : '',
+        endTime: appt.endTime ? appt.endTime.toISOString() : ''
+      })
         .pipe(
           map((response) => appointmentActions.createAppointmentSuccess({
             payload: {
               id: response.id,
-              ...appointment
+              ...appt
             } as AppointmentEntity
           })),
           catchError(err => of(appointmentActions.createAppointmentFail({
             message: 'There was an issue creating appointment',
-            payload: appointment
+            payload: appt
           }))
           )
         )
@@ -71,9 +82,9 @@ export class AppointmentsEffects {
       map(action => action.payload),
       switchMap(appt => this.service.updateAppointment({
         id: appt.id,
-        apptDate: appt.apptDate,
-        startTime: appt.startTime,
-        endTime: appt.endTime,
+        apptDate: appt.apptDate ? appt.apptDate.toISOString() : '',
+        startTime: appt.startTime ? appt.startTime.toISOString() : '',
+        endTime: appt.endTime ? appt.endTime.toISOString() : '',
         clientId: appt.clientId,
         clientName: appt.clientName,
         clientPhoneNumber: appt.clientPhoneNumber,

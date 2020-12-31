@@ -8,9 +8,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CurrentAppointmentsCardComponent } from './current-appointments-card/current-appointments-card.component';
 
 @NgModule({
-  declarations: [BookingComponent, AppointmentFormComponent],
+  declarations: [BookingComponent, AppointmentFormComponent, CurrentAppointmentsCardComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
